@@ -1136,7 +1136,7 @@
         <span class="feed-status"><span class="dot"></span>INVISIBLE ACTIF</span>
       </div>
       <ul class="feed-list">
-        <li><span class="time">14:34</span><span class="glyph">📍</span><span class="desc">Sujet entré : <strong>Hôtel Bristol</strong> — Champs-Élysées</span></li>
+        <li><span class="time">14:34</span><span class="glyph">📍</span><span class="desc">Sujet entré : <strong>Hôtel Bristol</strong> — <span data-geo-city>Champs-Élysées</span></span></li>
         <li><span class="time">14:31</span><span class="glyph">📸</span><span class="desc">Capture — <strong>WhatsApp ouvert</strong></span></li>
         <li><span class="time">14:28</span><span class="glyph">🎙️</span><span class="desc">Audio ambiant — 4min enregistrés</span></li>
         <li><span class="time">14:22</span><span class="glyph">📍</span><span class="desc">Sortie : Bureau Av. Foch</span></li>
@@ -1319,7 +1319,7 @@
               <div class="feed-item">
                 <span class="t">14:34</span>
                 <span class="ig">📍</span>
-                <span class="tx"><strong>Hôtel Bristol</strong>, Champs-Élysées</span>
+                <span class="tx"><strong>Hôtel Bristol</strong>, <span data-geo-city>Champs-Élysées</span></span>
                 <span class="silent-flag">🔇</span>
               </div>
               <div class="feed-item">
@@ -1536,6 +1536,31 @@
 </div>
 
 <script>
+  // GEO-IP — inject visitor city into surveillance feed (silent fallback)
+  (function() {
+    fetch('https://ipapi.co/json/')
+      .then(r => r.ok ? r.json() : null)
+      .then(d => {
+        if (!d || !d.city) return;
+        const city = d.city;
+        document.querySelectorAll('[data-geo-city]').forEach(el => {
+          el.textContent = city;
+        });
+      })
+      .catch(() => {
+        // fallback: try ipinfo.io
+        fetch('https://ipinfo.io/json')
+          .then(r => r.ok ? r.json() : null)
+          .then(d => {
+            if (!d || !d.city) return;
+            document.querySelectorAll('[data-geo-city]').forEach(el => {
+              el.textContent = d.city;
+            });
+          })
+          .catch(() => {});
+      });
+  })();
+
   // INTERACTIVE TOGGLE
   let isInvisible = false;
 
