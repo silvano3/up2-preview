@@ -47,25 +47,15 @@
     position: relative;
   }
 
-  /* Paper grain texture overlay */
   body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 1;
-    opacity: 0.4;
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 1;
+    opacity: 0.35;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.15 0 0 0 0 0.13 0 0 0 0 0.1 0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
     mix-blend-mode: overlay;
   }
-  /* Soft vignette */
   body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 2;
-    background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.6) 100%);
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 2;
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.55) 100%);
   }
 
   .container {
@@ -76,40 +66,12 @@
     z-index: 3;
   }
 
-  /* Typography helpers */
-  .display {
-    font-family: var(--serif);
-    font-weight: 400;
-    line-height: 0.95;
-    letter-spacing: -0.02em;
-  }
-  .display em { font-style: italic; color: var(--red-soft); font-weight: 400; }
-  .mono {
-    font-family: var(--mono);
-    font-weight: 500;
-    letter-spacing: 0;
-  }
-  .stamp {
-    font-family: var(--stamp);
-    letter-spacing: 0.05em;
-  }
-  .label {
-    font-family: var(--mono);
-    font-size: clamp(10px, 2.5vw, 12px);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.18em;
-    color: var(--ink-dim);
-  }
-
-  /* TOP CLASSIFIED BAR */
+  /* CLASSIFIED BAR */
   .classified-bar {
-    background: var(--red);
-    color: white;
+    background: var(--red); color: white;
     text-align: center;
     padding: 10px clamp(16px, 4vw, 28px);
-    position: sticky; top: 0;
-    z-index: 50;
+    position: sticky; top: 0; z-index: 50;
     font-family: var(--mono);
     font-size: clamp(11px, 2.8vw, 13px);
     font-weight: 700;
@@ -129,24 +91,21 @@
   }
 
   /* HERO */
-  .hero {
-    padding: clamp(40px, 10vw, 80px) 0 clamp(30px, 6vw, 50px);
-    position: relative;
-  }
+  .hero { padding: clamp(36px, 9vw, 72px) 0 clamp(28px, 6vw, 48px); position: relative; }
   .hero .meta-line {
     display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: clamp(24px, 5vw, 36px);
+    margin-bottom: clamp(20px, 5vw, 32px);
     padding-bottom: 12px;
     border-bottom: 1px solid var(--rule);
     font-family: var(--mono);
-    font-size: 11px;
+    font-size: 10px;
     color: var(--ink-dim);
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    flex-wrap: wrap;
-    gap: 8px;
+    flex-wrap: wrap; gap: 8px;
   }
   .hero .meta-line .file-id { color: var(--amber); }
+
   .hero .file-stamp {
     display: inline-block;
     border: 2px solid var(--red);
@@ -159,11 +118,12 @@
     transform: rotate(-2deg);
     margin-bottom: 24px;
   }
+
   .hero h1 {
     font-family: var(--serif);
-    font-size: clamp(48px, 11vw, 96px);
+    font-size: clamp(42px, 10.5vw, 84px);
     font-weight: 400;
-    line-height: 0.92;
+    line-height: 0.95;
     letter-spacing: -0.025em;
     margin-bottom: 24px;
   }
@@ -172,29 +132,40 @@
     color: var(--red-soft);
     display: block;
   }
+
   .hero .lede {
     font-family: var(--sans);
     font-size: clamp(16px, 4vw, 19px);
     line-height: 1.55;
-    max-width: 540px;
+    max-width: 560px;
     color: var(--ink);
-    margin-bottom: clamp(32px, 6vw, 48px);
+    margin-bottom: clamp(28px, 6vw, 40px);
   }
   .hero .lede strong { color: var(--amber-soft); font-weight: 600; }
+  .hero .lede .breakline { display: block; margin-top: 12px; }
+  .hero .lede .math {
+    font-family: var(--mono);
+    color: var(--red-soft);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    display: block;
+    margin-top: 12px;
+    font-size: clamp(14px, 3.5vw, 17px);
+  }
 
-  /* HERO MOCKUP */
-  .hero-panel {
+  /* HERO LIVE FEED PANEL */
+  .feed-panel {
     background: var(--paper);
     border: 1px solid var(--rule-bright);
-    padding: clamp(18px, 4vw, 28px);
+    padding: 0;
     margin: clamp(28px, 6vw, 40px) 0;
     position: relative;
     box-shadow:
       inset 0 1px 0 rgba(255,255,255,0.03),
       0 24px 60px -20px rgba(0,0,0,0.7);
   }
-  .hero-panel::before {
-    content: "PANEL — LIVE";
+  .feed-panel::before {
+    content: "PAINEL ATIVO — LIVE FEED";
     position: absolute;
     top: -10px; left: 16px;
     background: var(--bg);
@@ -203,21 +174,21 @@
     font-size: 10px;
     font-weight: 700;
     color: var(--green);
-    letter-spacing: 0.2em;
+    letter-spacing: 0.18em;
   }
-  .panel-head {
+  .feed-head {
     display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 18px;
-    padding-bottom: 14px;
+    padding: clamp(16px, 4vw, 22px) clamp(16px, 4vw, 22px) 12px;
     border-bottom: 1px dashed var(--rule);
+    flex-wrap: wrap; gap: 8px;
   }
-  .panel-head .title {
+  .feed-head .title {
     font-family: var(--serif);
-    font-size: 22px;
+    font-size: clamp(18px, 4.5vw, 22px);
     font-style: italic;
   }
-  .status-pill {
-    display: inline-flex; align-items: center; gap: 6px;
+  .feed-status {
+    display: inline-flex; align-items: center; gap: 8px;
     background: rgba(91, 217, 123, 0.08);
     border: 1px solid var(--green);
     color: var(--green);
@@ -227,35 +198,49 @@
     font-weight: 700;
     letter-spacing: 0.12em;
   }
-  .status-pill .dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--green);
+  .feed-status .dot {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--green);
     box-shadow: 0 0 6px var(--green-glow);
     animation: pulse-dot 1.5s ease-in-out infinite;
   }
-  .panel-rows { display: grid; gap: 6px; }
-  .panel-row {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 10px 0;
+  .feed-list {
+    list-style: none;
+    padding: 0;
+  }
+  .feed-list li {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    gap: 10px;
+    padding: 12px clamp(16px, 4vw, 22px);
     border-bottom: 1px dotted var(--rule);
     font-family: var(--mono);
-    font-size: clamp(12px, 3vw, 13px);
+    font-size: clamp(11px, 2.9vw, 13px);
+    line-height: 1.5;
+    align-items: baseline;
+    color: var(--ink);
   }
-  .panel-row:last-child { border-bottom: none; }
-  .panel-row .k { color: var(--ink-dim); letter-spacing: 0.05em; }
-  .panel-row .v { color: var(--ink); font-weight: 600; }
-  .panel-row .v.ok { color: var(--green); }
-  .panel-foot {
-    margin-top: 14px;
-    padding-top: 14px;
+  .feed-list li:last-child { border-bottom: none; }
+  .feed-list .time { color: var(--ink-dim); }
+  .feed-list .glyph { font-family: var(--sans); font-size: 14px; }
+  .feed-list .desc strong { color: var(--amber-soft); font-weight: 600; }
+  .feed-list .desc .new-flag {
+    color: var(--red); font-family: var(--mono); font-size: 9px; font-weight: 800;
+    letter-spacing: 0.15em;
+    padding: 2px 6px;
+    border: 1px solid var(--red);
+    margin-left: 6px;
+  }
+  .feed-foot {
+    padding: 12px clamp(16px, 4vw, 22px);
     border-top: 1px dashed var(--rule);
-    font-family: var(--stamp);
-    font-size: 12px;
-    color: var(--amber);
-    text-align: center;
-    letter-spacing: 0.05em;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px;
   }
+  .feed-foot .indetect { color: var(--green); font-weight: 800; }
 
   /* CTA */
   .cta-block { margin-top: clamp(28px, 6vw, 40px); }
@@ -274,7 +259,7 @@
     border: 1px solid var(--red);
     border-bottom-width: 4px;
     cursor: pointer;
-    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    transition: transform 0.12s ease;
     box-shadow:
       0 6px 0 -1px rgba(0,0,0,0.4),
       0 16px 40px -8px var(--red-glow);
@@ -284,8 +269,7 @@
   .cta:hover { transform: translateY(-2px); }
   .cta:active { transform: translateY(2px); border-bottom-width: 1px; }
   .cta::after {
-    content: "";
-    position: absolute; inset: 0;
+    content: ""; position: absolute; inset: 0;
     background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.18) 50%, transparent 70%);
     transform: translateX(-100%);
     animation: shine 3s ease-in-out infinite;
@@ -295,22 +279,15 @@
     100% { transform: translateX(200%); }
   }
   .cta-subtext {
-    display: block;
-    text-align: center;
-    margin-top: 12px;
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--ink-dim);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    display: block; text-align: center; margin-top: 12px;
+    font-family: var(--mono); font-size: 11px;
+    color: var(--ink-dim); letter-spacing: 0.1em; text-transform: uppercase;
   }
 
   /* SECTION */
   section { padding: clamp(50px, 11vw, 96px) 0; position: relative; }
   section.alt { background: var(--bg-2); }
-  .section-head {
-    margin-bottom: clamp(36px, 7vw, 56px);
-  }
+  .section-head { margin-bottom: clamp(32px, 7vw, 52px); }
   .section-head .kicker {
     font-family: var(--mono);
     font-size: 11px;
@@ -327,7 +304,7 @@
   }
   .section-head h2 {
     font-family: var(--serif);
-    font-size: clamp(34px, 8vw, 64px);
+    font-size: clamp(34px, 8vw, 60px);
     font-weight: 400;
     line-height: 0.98;
     letter-spacing: -0.02em;
@@ -335,51 +312,59 @@
   .section-head h2 em { font-style: italic; color: var(--red-soft); }
 
   /* STAKES */
-  .stakes-grid {
+  .stakes-list { display: grid; gap: clamp(16px, 4vw, 22px); }
+  .stake-row {
     display: grid;
+    grid-template-columns: clamp(80px, 22vw, 110px) 1fr;
     gap: clamp(16px, 4vw, 24px);
-    grid-template-columns: 1fr;
-  }
-  .stake-card {
     background: var(--bg-card);
     border: 1px solid var(--rule);
     padding: clamp(20px, 5vw, 28px);
+    align-items: center;
     position: relative;
   }
-  .stake-card::before {
-    content: attr(data-num);
+  .stake-row::before {
+    content: "";
     position: absolute;
-    top: -1px; right: -1px;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
     background: var(--red);
-    color: white;
-    padding: 4px 10px;
+  }
+  .stake-time {
+    text-align: center;
+    font-family: var(--serif);
+    color: var(--red-soft);
+  }
+  .stake-time .num {
+    display: block;
+    font-size: clamp(36px, 9vw, 56px);
+    line-height: 1;
+    font-style: italic;
+  }
+  .stake-time .unit {
+    display: block;
     font-family: var(--mono);
     font-size: 10px;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 0.15em;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    margin-top: 4px;
   }
-  .stake-card .icon-glyph {
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: clamp(40px, 9vw, 56px);
-    color: var(--red-soft);
-    line-height: 1;
-    margin-bottom: 12px;
-    display: block;
-  }
-  .stake-card h3 {
+  .stake-body h3 {
     font-family: var(--serif);
     font-size: clamp(22px, 5vw, 28px);
     font-weight: 400;
-    margin-bottom: 8px;
-    color: var(--ink);
+    line-height: 1.1;
+    margin-bottom: 6px;
   }
-  .stake-card p {
+  .stake-body p {
     font-family: var(--sans);
     font-size: clamp(14px, 3.5vw, 15px);
-    line-height: 1.6;
+    line-height: 1.55;
     color: var(--ink-dim);
   }
+  .stake-body p strong { color: var(--amber-soft); font-weight: 600; }
   .stakes-closer {
     margin-top: clamp(28px, 6vw, 40px);
     padding: clamp(20px, 4vw, 24px);
@@ -387,10 +372,10 @@
     border-bottom: 1px solid var(--rule-bright);
     font-family: var(--serif);
     font-style: italic;
-    font-size: clamp(17px, 4vw, 22px);
+    font-size: clamp(18px, 4vw, 24px);
     text-align: center;
     color: var(--amber-soft);
-    line-height: 1.4;
+    line-height: 1.35;
   }
 
   /* LAYERS */
@@ -408,7 +393,6 @@
     font-family: var(--mono);
     font-size: clamp(36px, 9vw, 56px);
     font-weight: 800;
-    color: var(--rule-bright);
     line-height: 1;
     -webkit-text-stroke: 1px var(--amber);
     color: transparent;
@@ -418,45 +402,39 @@
     font-size: clamp(22px, 5.5vw, 30px);
     font-weight: 400;
     margin-bottom: 4px;
-    line-height: 1.1;
+    line-height: 1.15;
   }
-  .layer-body .layer-tag {
+  .layer-body h3 em { font-style: italic; color: var(--amber-soft); }
+  .layer-body .tag {
     font-family: var(--mono);
     font-size: 10px;
-    color: var(--amber);
+    color: var(--red);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     margin-bottom: 14px;
     display: block;
   }
-  .mode-block {
-    display: grid;
-    gap: 10px;
-    margin-top: 12px;
-  }
-  .mode-line {
-    display: grid;
-    grid-template-columns: 88px 1fr;
-    gap: 12px;
+  .layer-body .moment {
+    margin-top: 14px;
+    padding: 14px 16px;
+    background: var(--bg-card);
+    border-left: 3px solid var(--green);
+    font-family: var(--sans);
     font-size: clamp(13px, 3.3vw, 14px);
-    line-height: 1.5;
-    padding: 10px 0;
-    border-top: 1px dotted var(--rule);
-    align-items: baseline;
+    line-height: 1.55;
+    color: var(--ink);
   }
-  .mode-line:first-child { border-top: 1px solid var(--rule-bright); }
-  .mode-line .mode-key {
+  .layer-body .moment .label {
     font-family: var(--mono);
-    font-size: 10px;
-    font-weight: 700;
+    font-size: 9px;
+    font-weight: 800;
+    color: var(--green);
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    letter-spacing: 0.12em;
-    padding-top: 2px;
+    margin-bottom: 6px;
+    display: block;
   }
-  .mode-line.padrao .mode-key { color: var(--ink-dim); }
-  .mode-line.invisivel .mode-key { color: var(--green); }
-  .mode-line .mode-val { color: var(--ink); }
-  .mode-line .mode-val strong { color: var(--amber-soft); font-weight: 600; }
+  .layer-body .moment strong { color: var(--amber-soft); font-weight: 600; }
 
   /* DEMO SECTION */
   .demo-section {
@@ -485,7 +463,7 @@
     overflow: hidden;
   }
   .demo-card::before {
-    content: "INTERACTIVE";
+    content: "INTERATIVO";
     position: absolute;
     top: 14px; right: -32px;
     background: var(--amber);
@@ -498,114 +476,234 @@
     transform: rotate(45deg);
     text-transform: uppercase;
   }
-
-  .status-readout {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: 16px;
-    align-items: center;
-    padding: 12px 16px;
-    background: var(--bg);
-    border: 1px solid var(--rule);
-    margin-bottom: clamp(20px, 4vw, 28px);
+  .demo-instruction {
+    text-align: center;
     font-family: var(--mono);
     font-size: clamp(11px, 2.8vw, 13px);
-    transition: all 0.5s ease;
+    color: var(--ink-dim);
+    margin-bottom: clamp(24px, 5vw, 32px);
+    letter-spacing: 0.08em;
   }
-  .status-readout .led {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    background: var(--amber);
-    box-shadow: 0 0 8px var(--amber);
-    transition: all 0.5s ease;
-  }
-  .status-readout .status-text {
-    font-weight: 700;
-    color: var(--amber);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    transition: color 0.5s ease;
-  }
-  .status-readout .uptime {
-    color: var(--ink-faint);
-    font-size: 10px;
-    letter-spacing: 0.1em;
-  }
-  .status-readout.invisible .led {
-    background: var(--green);
-    box-shadow: 0 0 10px var(--green-glow);
-  }
-  .status-readout.invisible .status-text { color: var(--green); }
+  .demo-instruction strong { color: var(--amber-soft); }
 
-  .phones-rig {
-    display: grid;
-    gap: clamp(16px, 4vw, 24px);
-    grid-template-columns: 1fr;
-    margin-bottom: clamp(20px, 4vw, 28px);
+  /* PHONE FRAME — single */
+  .phone-wrap {
+    display: flex; flex-direction: column; align-items: center;
+    gap: clamp(20px, 4vw, 28px);
   }
-  @media (min-width: 560px) {
-    .phones-rig { grid-template-columns: 1fr 1fr; }
-  }
-
   .phone-frame {
     background: #050505;
     border: 1px solid #1a1a1a;
-    border-radius: 28px;
-    padding: 8px;
+    border-radius: 36px;
+    padding: 9px;
     position: relative;
-    aspect-ratio: 9 / 18.5;
+    width: 100%;
+    max-width: 320px;
+    aspect-ratio: 9 / 19;
     box-shadow:
       inset 0 0 0 2px #000,
       inset 0 0 0 3px #1a1a1a,
-      0 20px 60px -20px rgba(0,0,0,0.8);
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden;
-    max-width: 280px;
-    margin: 0 auto;
-    width: 100%;
+      0 30px 80px -20px rgba(0,0,0,0.9);
   }
-  .phone-frame::before {
+  .phone-notch {
     content: "";
     position: absolute;
-    top: 8px; left: 50%; transform: translateX(-50%);
-    width: 60px; height: 18px;
+    top: 12px; left: 50%; transform: translateX(-50%);
+    width: 80px; height: 22px;
     background: #000;
-    border-radius: 0 0 14px 14px;
-    z-index: 10;
-  }
-  .phone-tag {
-    position: absolute;
-    top: -10px; left: 50%; transform: translateX(-50%);
-    background: var(--bg-elev);
-    color: var(--amber);
-    font-family: var(--mono);
-    font-size: 9px;
-    font-weight: 800;
-    letter-spacing: 0.18em;
-    padding: 3px 10px;
-    border: 1px solid var(--rule-bright);
-    text-transform: uppercase;
-    white-space: nowrap;
-    z-index: 11;
+    border-radius: 0 0 16px 16px;
+    z-index: 20;
   }
   .phone-screen {
     height: 100%;
-    border-radius: 22px;
+    border-radius: 28px;
     overflow: hidden;
     position: relative;
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex; flex-direction: column;
+    background: #fafaf7;
+    color: #1a1a1a;
+    transition: background 0.5s ease, color 0.5s ease;
   }
-  .phone-screen .scan-line {
+  .phone-screen.invisible {
+    background: #0a0907;
+    color: #ebe4d2;
+  }
+  /* iOS-style status bar */
+  .ios-status {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 22px 6px;
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 700;
+    color: inherit;
+    height: 34px;
+  }
+  .ios-status .time { font-variant-numeric: tabular-nums; }
+  .ios-status .right-cluster {
+    display: flex; align-items: center; gap: 4px;
+    font-size: 10px;
+  }
+  /* App header */
+  .app-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 14px 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    transition: border-color 0.5s ease;
+  }
+  .phone-screen.invisible .app-header { border-color: rgba(255,255,255,0.08); }
+  .app-logo {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .app-logo .dot { color: var(--red); }
+
+  /* THE TOGGLE — top right of the app header */
+  .toggle-eye {
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(216, 51, 47, 0.1);
+    border: 1px solid var(--red);
+    color: var(--red);
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+    min-height: 32px;
+    position: relative;
+  }
+  .toggle-eye .eye-icon { font-size: 13px; line-height: 1; }
+  .toggle-eye:hover { background: rgba(216, 51, 47, 0.18); }
+  .toggle-eye.active {
+    background: rgba(91, 217, 123, 0.15);
+    border-color: var(--green);
+    color: var(--green);
+    box-shadow: 0 0 14px var(--green-glow);
+  }
+  .toggle-eye .label-off { display: inline; }
+  .toggle-eye .label-on { display: none; }
+  .toggle-eye.active .label-off { display: none; }
+  .toggle-eye.active .label-on { display: inline; }
+  .toggle-pulse-hint {
+    position: absolute;
+    top: -2px; right: -2px;
+    width: 8px; height: 8px;
+    background: var(--amber);
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 var(--amber);
+    animation: nudge 1.6s ease-in-out infinite;
+  }
+  .toggle-eye.active .toggle-pulse-hint { display: none; }
+  @keyframes nudge {
+    0%,100% { box-shadow: 0 0 0 0 rgba(217, 164, 65, 0.7); }
+    50% { box-shadow: 0 0 0 8px rgba(217, 164, 65, 0); }
+  }
+
+  /* Mode indicator */
+  .mode-strip {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 14px;
+    background: rgba(216, 51, 47, 0.08);
+    color: var(--red);
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: all 0.5s ease;
+  }
+  .phone-screen.invisible .mode-strip {
+    background: rgba(91, 217, 123, 0.1);
+    color: var(--green);
+  }
+  .mode-strip .led {
+    width: 8px; height: 8px; border-radius: 50%; background: currentColor;
+    box-shadow: 0 0 6px currentColor;
+  }
+
+  /* Live feed inside phone */
+  .phone-feed {
+    flex: 1;
+    overflow: hidden;
+    padding: 4px 0;
+  }
+  .feed-item {
+    display: grid;
+    grid-template-columns: auto auto 1fr auto;
+    gap: 8px;
+    align-items: center;
+    padding: 10px 14px;
+    font-family: var(--mono);
+    font-size: 10px;
+    line-height: 1.4;
+    border-bottom: 1px dotted rgba(0,0,0,0.08);
+    color: inherit;
+    transition: all 0.3s ease;
+  }
+  .phone-screen.invisible .feed-item { border-color: rgba(255,255,255,0.08); }
+  .feed-item .t { color: rgba(0,0,0,0.5); font-weight: 500; }
+  .phone-screen.invisible .feed-item .t { color: rgba(255,255,255,0.4); }
+  .feed-item .ig { font-family: var(--sans); font-size: 12px; line-height: 1; }
+  .feed-item .tx {
+    font-family: var(--sans);
+    font-size: 10px;
+    line-height: 1.3;
+    font-weight: 500;
+    color: inherit;
+  }
+  .feed-item .tx strong { font-weight: 700; }
+  .feed-item .silent-flag {
+    display: none;
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--green);
+    font-weight: 800;
+  }
+  .phone-screen.invisible .feed-item .silent-flag { display: inline-block; }
+
+  /* Bottom indicator strip */
+  .indicator-strip {
+    background: rgba(0,0,0,0.04);
+    padding: 10px 14px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: flex; justify-content: space-between; align-items: center;
+    transition: all 0.5s ease;
+  }
+  .phone-screen.invisible .indicator-strip {
+    background: rgba(255,255,255,0.04);
+    border-color: rgba(255,255,255,0.08);
+  }
+  .indicator-strip .vis-label { font-weight: 700; }
+  .indicator-strip .vis-text-off { display: inline; color: var(--red); }
+  .indicator-strip .vis-text-on { display: none; color: var(--green); }
+  .phone-screen.invisible .vis-text-off { display: none; }
+  .phone-screen.invisible .vis-text-on { display: inline; }
+
+  /* Scan-line wipe */
+  .phone-screen::after {
+    content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, transparent 0%, rgba(91, 217, 123, 0.4) 50%, transparent 100%);
+    background: linear-gradient(180deg, transparent 0%, rgba(91, 217, 123, 0.5) 50%, transparent 100%);
     height: 30%;
     pointer-events: none;
     opacity: 0;
     transform: translateY(-100%);
     z-index: 20;
   }
-  .phone-frame.scanning .scan-line {
+  .phone-frame.scanning .phone-screen::after {
     opacity: 1;
     animation: scan 0.9s ease-in-out;
   }
@@ -616,173 +714,69 @@
     100% { transform: translateY(380%); opacity: 0; }
   }
 
-  /* PANEL phone (your dashboard) */
-  .panel-phone .phone-screen {
-    background: #fafaf7;
-    color: #111;
-    padding: 24px 14px 14px;
-    display: flex; flex-direction: column;
-    gap: 6px;
-  }
-  .panel-phone .pp-title {
-    font-family: var(--serif);
-    font-size: 16px;
-    font-style: italic;
-    letter-spacing: -0.02em;
-    margin-top: 8px;
-  }
-  .panel-phone .pp-mode-badge {
-    align-self: flex-start;
-    background: var(--red);
-    color: white;
-    padding: 2px 7px;
-    font-family: var(--mono);
-    font-size: 8px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    margin: 2px 0 6px;
-  }
-  .panel-phone .pp-card {
-    background: #f0ede5;
-    padding: 6px 8px;
-    font-family: var(--mono);
-    font-size: 9px;
-    display: flex; justify-content: space-between;
-    color: #333;
-  }
-  .panel-phone .pp-card .v { font-weight: 700; }
-  .panel-phone .pp-card .v.ok { color: #15803d; }
-  .panel-phone .pp-card .v.warn { color: #b91c1c; }
-
-  /* Invisible state */
-  .phone-frame.invisible .panel-phone-screen,
-  .panel-phone.invisible .phone-screen {
-    background: #0a0907;
-    color: #ebe4d2;
-  }
-  .phone-frame.invisible .pp-card,
-  .panel-phone.invisible .pp-card {
-    background: #15110d;
-    color: #8a8275;
-  }
-  .phone-frame.invisible .pp-mode-badge,
-  .panel-phone.invisible .pp-mode-badge {
-    background: rgba(91, 217, 123, 0.15);
-    color: var(--green);
-    border: 1px solid var(--green);
-  }
-
-  /* TARGET phone (target's home screen) */
-  .target-phone .phone-screen {
-    background: linear-gradient(180deg, #2a3a5a 0%, #1a2740 100%);
-    padding: 28px 14px 14px;
-    transition: background 0.6s ease;
-  }
-  .target-phone .home-time {
-    font-family: var(--sans);
-    font-size: 18px;
-    font-weight: 700;
-    color: white;
-    text-align: center;
-    margin: 6px 0 12px;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
-  }
-  .target-phone .app-grid {
+  /* Callout card next to/below phone */
+  .target-callout {
+    width: 100%;
+    max-width: 320px;
+    background: var(--bg-card);
+    border: 1px solid var(--rule-bright);
+    padding: 14px 16px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 7px;
+    grid-template-columns: 1fr auto;
+    gap: 14px;
+    align-items: center;
   }
-  .target-phone .app {
-    text-align: center;
-  }
-  .target-phone .app .icon-square {
-    aspect-ratio: 1;
-    border-radius: 9px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px;
-    color: white;
-    margin-bottom: 3px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-    transition: all 0.6s ease;
-  }
-  .target-phone .app .icon-square.spymate {
-    background: linear-gradient(135deg, #d8332f, #a01e1a);
+  .target-callout .left {
     font-family: var(--mono);
-    font-size: 8px;
-    font-weight: 800;
+    font-size: 11px;
+    color: var(--ink-dim);
     letter-spacing: 0.05em;
   }
-  .target-phone .app .icon-square.spymate::after { content: "SM"; }
-  .target-phone .app .lbl {
-    font-family: var(--sans);
-    font-size: 7px;
-    color: white;
-    opacity: 0.9;
-    font-weight: 500;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-  }
-  .target-phone.invisible .app .icon-square.spymate {
-    background: #1a1a1a;
-    font-size: 16px;
-  }
-  .target-phone.invisible .app .icon-square.spymate::after { content: "🧮"; }
-  .target-phone.invisible .app.spy-app .lbl::after { content: "Calculadora"; }
-  .target-phone .app.spy-app .lbl::after { content: "SpyMate"; }
-  .target-phone .app.spy-app .lbl { font-size: 0; }
-  .target-phone .app.spy-app .lbl::after { font-size: 7px; }
-
-  /* TOGGLE — Tactical switch */
-  .toggle-rig {
-    display: flex; flex-direction: column; align-items: center; gap: 12px;
-    padding: clamp(18px, 4vw, 24px) 0;
-    border-top: 1px dashed var(--rule);
-    border-bottom: 1px dashed var(--rule);
-    margin-bottom: 16px;
-  }
-  .toggle-button {
-    background: transparent;
-    border: 1px solid var(--green);
-    color: var(--green);
-    padding: clamp(14px, 3.5vw, 18px) clamp(22px, 5vw, 32px);
+  .target-callout .left strong { color: var(--ink); font-weight: 700; }
+  .target-callout .icon-display {
+    display: flex; align-items: center; gap: 8px;
     font-family: var(--mono);
-    font-size: clamp(12px, 3vw, 14px);
+    font-size: 10px;
+    color: var(--ink-dim);
+  }
+  .target-callout .icon-box {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    background: linear-gradient(135deg, #d8332f, #a01e1a);
+    color: white;
+    font-family: var(--mono);
     font-weight: 800;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    cursor: pointer;
-    display: inline-flex; align-items: center; gap: 14px;
-    position: relative;
-    transition: all 0.25s ease;
-    min-height: 56px;
-    min-width: 280px;
-    justify-content: center;
+    transition: all 0.5s ease;
   }
-  .toggle-button:hover {
-    background: rgba(91, 217, 123, 0.08);
-    box-shadow: 0 0 24px var(--green-glow);
+  .target-callout .icon-box.invisible {
+    background: linear-gradient(135deg, #2a2520, #15110d);
+    color: var(--ink);
   }
-  .toggle-button .switch-led {
-    width: 12px; height: 12px;
-    border-radius: 50%;
-    background: var(--ink-faint);
-    border: 1px solid currentColor;
-    transition: all 0.3s ease;
+  .target-callout .icon-text {
+    display: flex; flex-direction: column;
   }
-  .toggle-button.active {
-    color: var(--red-soft);
-    border-color: var(--red);
+  .target-callout .icon-text small {
+    color: var(--ink-faint); font-size: 9px;
+    letter-spacing: 0.15em; text-transform: uppercase;
   }
-  .toggle-button.active .switch-led {
-    background: var(--red);
-    box-shadow: 0 0 10px var(--red-glow);
-  }
-  .demo-hint {
+  .target-callout .icon-text .name-padrao { display: inline; }
+  .target-callout .icon-text .name-invisivel { display: none; }
+  .target-callout.invisible .icon-text .name-padrao { display: none; }
+  .target-callout.invisible .icon-text .name-invisivel { display: inline; }
+
+  .demo-action-hint {
+    text-align: center;
+    margin-top: 8px;
     font-family: var(--mono);
     font-size: 11px;
     color: var(--ink-faint);
-    text-align: center;
     letter-spacing: 0.08em;
-    text-transform: uppercase;
+  }
+  .demo-action-hint .arrow {
+    color: var(--amber);
+    font-weight: 800;
   }
 
   /* COMPARISON */
@@ -798,6 +792,7 @@
     background: var(--bg-card);
     border: 1px solid var(--rule);
     padding: clamp(22px, 5vw, 30px);
+    position: relative;
   }
   .compare-col.pro {
     border-color: var(--green);
@@ -810,48 +805,55 @@
     color: var(--ink-dim);
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
   .compare-col.pro .col-tag { color: var(--green); }
   .compare-col .col-name {
     font-family: var(--serif);
     font-size: clamp(28px, 6vw, 36px);
     font-style: italic;
-    margin-bottom: 24px;
+    margin-bottom: 22px;
     line-height: 1;
   }
   .compare-col.pro .col-name { color: var(--green); }
-  .compare-list { list-style: none; display: grid; gap: 14px; }
-  .compare-list li {
-    display: grid;
-    grid-template-columns: 22px 1fr;
-    gap: 12px;
+  .scenario {
+    padding: 14px 0;
+    border-top: 1px dotted var(--rule);
     font-size: clamp(13px, 3.3vw, 14px);
     line-height: 1.5;
-    color: var(--ink);
   }
-  .compare-list .check { color: var(--ink-dim); font-family: var(--mono); font-weight: 700; font-size: 14px; }
-  .compare-col.pro .compare-list .check { color: var(--green); }
-  .compare-list strong { color: var(--amber-soft); font-weight: 600; }
+  .scenario:first-of-type { border-top: 1px solid var(--rule-bright); }
+  .scenario .when {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-dim);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    display: block;
+  }
+  .scenario .what { color: var(--ink); }
+  .scenario .what strong { color: var(--amber-soft); font-weight: 600; }
+  .compare-col.pro .scenario .what strong { color: var(--green); }
 
   /* AUTHORITY */
   .authority {
     display: grid;
     grid-template-columns: 1fr;
-    gap: clamp(24px, 5vw, 36px);
+    gap: clamp(20px, 4vw, 30px);
     align-items: start;
   }
   @media (min-width: 560px) {
-    .authority { grid-template-columns: 140px 1fr; }
+    .authority { grid-template-columns: 130px 1fr; }
   }
   .authority-portrait {
     background: var(--bg-card);
     border: 1px solid var(--rule-bright);
     aspect-ratio: 1;
-    max-width: 140px;
+    max-width: 130px;
     display: flex; align-items: center; justify-content: center;
     font-family: var(--serif);
-    font-size: 72px;
+    font-size: 64px;
     font-style: italic;
     color: var(--amber);
     position: relative;
@@ -860,7 +862,7 @@
     content: "FILE 014";
     position: absolute;
     bottom: -10px; left: 50%; transform: translateX(-50%);
-    background: var(--bg-2);
+    background: var(--bg);
     padding: 2px 10px;
     font-family: var(--mono);
     font-size: 9px;
@@ -868,11 +870,8 @@
     letter-spacing: 0.15em;
   }
   .authority-body .auth-tag {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--amber);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
+    font-family: var(--mono); font-size: 10px;
+    color: var(--amber); letter-spacing: 0.2em; text-transform: uppercase;
     margin-bottom: 8px;
   }
   .authority-body .auth-name {
@@ -882,11 +881,8 @@
     margin-bottom: 4px;
   }
   .authority-body .auth-role {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--ink-dim);
-    margin-bottom: 18px;
-    letter-spacing: 0.05em;
+    font-family: var(--mono); font-size: 12px;
+    color: var(--ink-dim); margin-bottom: 18px; letter-spacing: 0.05em;
   }
   .auth-quote {
     font-family: var(--serif);
@@ -903,30 +899,21 @@
   .offer-box {
     background: var(--bg-card);
     border: 1px solid var(--rule-bright);
-    padding: clamp(28px, 6vw, 44px);
+    padding: clamp(26px, 6vw, 42px);
     position: relative;
     text-align: center;
   }
   .offer-box::before, .offer-box::after {
-    content: "";
-    position: absolute;
+    content: ""; position: absolute;
     width: 32px; height: 32px;
     border: 2px solid var(--red);
   }
-  .offer-box::before {
-    top: -1px; left: -1px;
-    border-right: none; border-bottom: none;
-  }
-  .offer-box::after {
-    bottom: -1px; right: -1px;
-    border-left: none; border-top: none;
-  }
+  .offer-box::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+  .offer-box::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
   .offer-tag {
     font-family: var(--stamp);
-    font-size: 12px;
-    color: var(--red-soft);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
+    font-size: 12px; color: var(--red-soft);
+    letter-spacing: 0.15em; text-transform: uppercase;
     margin-bottom: 14px;
     display: inline-block;
     padding: 4px 14px;
@@ -939,6 +926,7 @@
     line-height: 1;
     margin: 18px 0;
   }
+  .offer-title em { font-style: italic; color: var(--amber); }
   .price-cluster {
     display: flex; justify-content: center; align-items: baseline; gap: 18px;
     margin: 30px 0 12px;
@@ -966,12 +954,31 @@
     text-transform: uppercase;
     margin-bottom: 28px;
   }
+  .why-discount {
+    background: var(--bg-2);
+    border-left: 3px solid var(--amber);
+    padding: 14px 18px;
+    text-align: left;
+    margin: 0 auto 28px;
+    max-width: 460px;
+    font-family: var(--sans);
+    font-size: clamp(13px, 3.3vw, 14px);
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .why-discount .label {
+    display: block;
+    font-family: var(--mono); font-size: 10px;
+    color: var(--amber); letter-spacing: 0.15em; text-transform: uppercase;
+    margin-bottom: 6px; font-weight: 800;
+  }
+  .why-discount strong { color: var(--amber-soft); font-weight: 600; }
+
   .offer-bullets {
     text-align: left;
-    max-width: 420px;
+    max-width: 460px;
     margin: 0 auto 28px;
-    display: grid;
-    gap: 12px;
+    display: grid; gap: 12px;
   }
   .offer-bullet {
     display: grid;
@@ -982,11 +989,7 @@
     line-height: 1.5;
     color: var(--ink);
   }
-  .offer-bullet .x {
-    color: var(--green);
-    font-family: var(--mono);
-    font-weight: 800;
-  }
+  .offer-bullet .x { color: var(--green); font-family: var(--mono); font-weight: 800; }
   .offer-bullet strong { color: var(--amber-soft); font-weight: 600; }
 
   .timer-row {
@@ -1020,7 +1023,7 @@
 
   .decline-link {
     display: block;
-    margin-top: 18px;
+    margin-top: 20px;
     font-family: var(--mono);
     font-size: 11px;
     color: var(--ink-faint);
@@ -1028,7 +1031,10 @@
     text-decoration: underline;
     text-underline-offset: 4px;
     cursor: pointer;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.03em;
+    line-height: 1.55;
+    text-transform: none;
+    padding: 0 10px;
   }
   .decline-link:hover { color: var(--ink-dim); }
 
@@ -1067,7 +1073,7 @@
     text-transform: uppercase;
   }
 
-  /* Mobile sticky footer CTA */
+  /* Sticky mobile CTA */
   .sticky-cta {
     position: fixed;
     bottom: 0; left: 0; right: 0;
@@ -1090,11 +1096,9 @@
   }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
-  /* Mobile-specific tweaks */
   @media (max-width: 480px) {
-    .hero h1 { font-size: clamp(40px, 13vw, 64px); }
-    .compare-list li { grid-template-columns: 18px 1fr; gap: 8px; }
-    .toggle-button { min-width: 100%; }
+    .stake-row { grid-template-columns: 80px 1fr; gap: 14px; padding: 18px 16px; }
+    .stake-time .num { font-size: 38px; }
   }
 </style>
 </head>
@@ -1103,7 +1107,7 @@
 <!-- CLASSIFIED BAR -->
 <div class="classified-bar">
   <span class="pulse"></span>
-  <span>ARQUIVO ATIVO // NÃO FECHAR</span>
+  <span>ETAPA FINAL // NÃO FECHE</span>
   <span class="pulse"></span>
 </div>
 
@@ -1115,33 +1119,39 @@
       <span>STATUS / OPEN</span>
     </div>
 
-    <div class="file-stamp reveal">— ETAPA FINAL —</div>
+    <div class="file-stamp reveal">— TRAVA DE SEGURANÇA PENDENTE —</div>
 
-    <h1 class="reveal">Quem é detectado,<br><em>perde tudo.</em></h1>
+    <h1 class="reveal">Você acabou de pagar<br>pra ver tudo.<br><em>Sem isso, ele(a) deleta tudo.</em></h1>
 
     <p class="lede reveal">
-      Esta é a camada que separa <strong>fechar o caso</strong> de
-      <strong>perder a investigação inteira</strong> em 30 segundos.
-      Tudo o que você acabou de comprar depende dela.
+      O SpyMate <strong>vê</strong>. Mas só funciona enquanto ele(a) não souber que tá sendo monitorado(a).<br>
+      <span class="breakline"><strong>1 ícone fora do lugar. 1 update do iOS. 1 notificação que escapou.</strong></span>
+      <span class="math">→ 30 segundos depois, os $97 que você acabou de pagar viram zero.</span>
     </p>
 
-    <div class="hero-panel reveal">
-      <div class="panel-head">
-        <span class="title">SpyMate / Painel</span>
-        <span class="status-pill"><span class="dot"></span>INVISÍVEL ATIVO</span>
+    <!-- Live surveillance feed panel -->
+    <div class="feed-panel reveal">
+      <div class="feed-head">
+        <span class="title">SpyMate / OPERAÇÃO 14</span>
+        <span class="feed-status"><span class="dot"></span>INVISÍVEL ATIVO</span>
       </div>
-      <div class="panel-rows">
-        <div class="panel-row"><span class="k">// LOCALIZAÇÃO</span><span class="v">Av. Paulista, 1500</span></div>
-        <div class="panel-row"><span class="k">// ÚLTIMA MENSAGEM</span><span class="v">há 4 min</span></div>
-        <div class="panel-row"><span class="k">// CAPTURAS HOJE</span><span class="v">17</span></div>
-        <div class="panel-row"><span class="k">// STATUS NO APARELHO</span><span class="v ok">INDETECTÁVEL</span></div>
+      <ul class="feed-list">
+        <li><span class="time">14:34</span><span class="glyph">📍</span><span class="desc">Alvo chegou em <strong>Hotel Bristol</strong> — Av. Paulista</span></li>
+        <li><span class="time">14:31</span><span class="glyph">📸</span><span class="desc">Captura — <strong>WhatsApp aberto</strong></span></li>
+        <li><span class="time">14:28</span><span class="glyph">🎙️</span><span class="desc">Áudio ambiente — 4min gravados</span></li>
+        <li><span class="time">14:22</span><span class="glyph">📍</span><span class="desc">Saiu de: Escritório Av. Faria Lima</span></li>
+        <li><span class="time">14:18</span><span class="glyph">💬</span><span class="desc">Nova msg: "<strong>Camila ❤️</strong>"<span class="new-flag">NOVO</span></span></li>
+        <li><span class="time">14:15</span><span class="glyph">📲</span><span class="desc">Dating app detectado: <strong>Bumble</strong> (ativo)</span></li>
+      </ul>
+      <div class="feed-foot">
+        <span>UPTIME 03:14:22</span>
+        <span class="indetect">→ NO APARELHO: INDETECTÁVEL</span>
       </div>
-      <div class="panel-foot">— operação silenciosa em curso —</div>
     </div>
 
     <div class="cta-block reveal">
       <a href="#offer" class="cta">
-        Ativar Modo Invisível — $37
+        Blindar meu SpyMate — $37
       </a>
       <span class="cta-subtext">vitalício · 1 clique · garantia 30 dias</span>
     </div>
@@ -1152,30 +1162,49 @@
 <section class="alt">
   <div class="container">
     <div class="section-head reveal">
-      <div class="kicker">RISCO / CONFIRMADO</div>
-      <h2>O que acontece quando o alvo <em>descobre.</em></h2>
+      <div class="kicker">CRONOMETRADO / REAL</div>
+      <h2>O que acontece quando ele(a) descobre — <em>cronometrado.</em></h2>
     </div>
 
-    <div class="stakes-grid">
-      <div class="stake-card reveal" data-num="01">
-        <span class="icon-glyph">×</span>
-        <h3>Apaga tudo</h3>
-        <p>Histórico do WhatsApp, conversas com a outra pessoa, fotos comprometedoras — deletadas em segundos, sem chance de recuperar.</p>
+    <div class="stakes-list">
+
+      <div class="stake-row reveal">
+        <div class="stake-time">
+          <span class="num">30s</span>
+          <span class="unit">SEGUNDOS</span>
+        </div>
+        <div class="stake-body">
+          <h3>O WhatsApp inteiro vira zero.</h3>
+          <p>Históricos, áudios, fotos, mensagens com a outra pessoa. <strong>Toda evidência que custou semanas pra você juntar — apagada antes de você conseguir confrontar.</strong></p>
+        </div>
       </div>
-      <div class="stake-card reveal" data-num="02">
-        <span class="icon-glyph">↺</span>
-        <h3>Reseta o celular</h3>
-        <p>Reset de fábrica zera todos os rastros do aparelho. Toda evidência coletada: perdida. Você volta pra estaca zero.</p>
+
+      <div class="stake-row reveal">
+        <div class="stake-time">
+          <span class="num">2m</span>
+          <span class="unit">MINUTOS</span>
+        </div>
+        <div class="stake-body">
+          <h3>Reset de fábrica. $97 viram zero.</h3>
+          <p>Cada localização capturada, cada print, cada áudio gravado — <strong>desaparece de um lado e do outro</strong>. Você fica sem evidência e sem a ferramenta que pagou pra ter.</p>
+        </div>
       </div>
-      <div class="stake-card reveal" data-num="03">
-        <span class="icon-glyph">∅</span>
-        <h3>Bloqueia e some</h3>
-        <p>Te bloqueia em tudo. Muda número, deleta redes, troca rotina. Você perde até o ponto de partida da investigação.</p>
+
+      <div class="stake-row reveal">
+        <div class="stake-time">
+          <span class="num">24h</span>
+          <span class="unit">HORAS</span>
+        </div>
+        <div class="stake-body">
+          <h3>Muda número. Deleta redes. Some.</h3>
+          <p>Agora ele(a) sabe que você desconfiou — e <strong>nunca mais vai escorregar perto de você</strong>. Você perde até o ponto de partida da investigação. Provavelmente pra sempre.</p>
+        </div>
       </div>
+
     </div>
 
     <div class="stakes-closer reveal">
-      Sem invisibilidade, a investigação vive em risco a cada segundo.
+      Cada minuto sem invisibilidade<br>é cada minuto que essa história pode terminar.
     </div>
   </div>
 </section>
@@ -1185,7 +1214,7 @@
   <div class="container">
     <div class="section-head reveal">
       <div class="kicker">PROTOCOLO / 04 CAMADAS</div>
-      <h2>Como o Modo Invisível <em>protege.</em></h2>
+      <h2>Como o Modo Invisível <em>te salva.</em></h2>
     </div>
 
     <div class="layers">
@@ -1193,17 +1222,11 @@
       <article class="layer reveal">
         <span class="layer-num">01</span>
         <div class="layer-body">
-          <span class="layer-tag">CAMUFLAGEM</span>
-          <h3>Customização total do ícone</h3>
-          <div class="mode-block">
-            <div class="mode-line padrao">
-              <span class="mode-key">// padrão</span>
-              <span class="mode-val">Ícone SpyMate (você reconhece quando quiser acessar).</span>
-            </div>
-            <div class="mode-line invisivel">
-              <span class="mode-key">// invisível</span>
-              <span class="mode-val">Vira <strong>calculadora, relógio ou bloco de notas</strong>. Nome do app na lista: "Sistema". Total controle.</span>
-            </div>
+          <span class="tag">CAMUFLAGEM</span>
+          <h3>O ícone vira <em>calculadora, relógio ou bloco de notas</em>.</h3>
+          <div class="moment">
+            <span class="label">O MOMENTO QUE TE SALVA</span>
+            Ele(a) abriu o gerenciador de apps procurando algo estranho. Olhou cada ícone. <strong>Não achou nada que não conhecia.</strong> Você continua dentro.
           </div>
         </div>
       </article>
@@ -1211,17 +1234,11 @@
       <article class="layer reveal">
         <span class="layer-num">02</span>
         <div class="layer-body">
-          <span class="layer-tag">SILÊNCIO</span>
-          <h3>Operação 100% silenciosa</h3>
-          <div class="mode-block">
-            <div class="mode-line padrao">
-              <span class="mode-key">// padrão</span>
-              <span class="mode-val">Notificações funcionam como normal.</span>
-            </div>
-            <div class="mode-line invisivel">
-              <span class="mode-key">// invisível</span>
-              <span class="mode-val"><strong>Zero som, zero vibração, zero badge</strong> no aparelho monitorado. Capturas só pra você, no seu painel.</span>
-            </div>
+          <span class="tag">SILÊNCIO</span>
+          <h3>Zero notificação. Zero vibração. <em>Zero rastro.</em></h3>
+          <div class="moment">
+            <span class="label">O MOMENTO QUE TE SALVA</span>
+            Você capturou um print do WhatsApp dele(a). <strong>Ele(a) tava com o celular na mão.</strong> Não recebeu nada. Não viu nada. A captura chegou só pra você.
           </div>
         </div>
       </article>
@@ -1229,17 +1246,11 @@
       <article class="layer reveal">
         <span class="layer-num">03</span>
         <div class="layer-body">
-          <span class="layer-tag">PERSISTÊNCIA</span>
-          <h3>Patch automático em cada atualização</h3>
-          <div class="mode-block">
-            <div class="mode-line padrao">
-              <span class="mode-key">// padrão</span>
-              <span class="mode-val">Funciona nas versões de OS suportadas.</span>
-            </div>
-            <div class="mode-line invisivel">
-              <span class="mode-key">// invisível</span>
-              <span class="mode-val">iOS/Android atualizou? <strong>Patch de camuflagem no mesmo dia.</strong> Você nunca fica exposto.</span>
-            </div>
+          <span class="tag">PERSISTÊNCIA</span>
+          <h3>Sobrevive a <em>qualquer atualização</em> do iOS ou Android.</h3>
+          <div class="moment">
+            <span class="label">O MOMENTO QUE TE SALVA</span>
+            iOS 19 saiu. Ele(a) atualizou. <strong>Patch de camuflagem foi aplicado no mesmo dia.</strong> Apps de monitoramento amador desativaram. O seu continua rodando.
           </div>
         </div>
       </article>
@@ -1247,17 +1258,11 @@
       <article class="layer reveal">
         <span class="layer-num">04</span>
         <div class="layer-body">
-          <span class="layer-tag">ALERTA</span>
-          <h3>Aviso de atividade suspeita</h3>
-          <div class="mode-block">
-            <div class="mode-line padrao">
-              <span class="mode-key">// padrão</span>
-              <span class="mode-val">Você acompanha pelo painel quando quiser.</span>
-            </div>
-            <div class="mode-line invisivel">
-              <span class="mode-key">// invisível</span>
-              <span class="mode-val">Atividade fora do padrão no aparelho? <strong>Você recebe push no seu celular</strong> em segundos, com a próxima ação recomendada.</span>
-            </div>
+          <span class="tag">ALARME</span>
+          <h3>Push pra você quando ele(a) <em>começar a desconfiar</em>.</h3>
+          <div class="moment">
+            <span class="label">O MOMENTO QUE TE SALVA</span>
+            Ele(a) abriu as configurações de segurança do celular. <strong>Em 4 segundos você recebe push: "Recue agora. Pause por 30 min."</strong> Investigação preservada.
           </div>
         </div>
       </article>
@@ -1270,55 +1275,112 @@
 <section class="demo-section">
   <div class="container">
     <div class="section-head reveal">
-      <div class="kicker">DEMONSTRAÇÃO / AO VIVO</div>
-      <h2>Sinta como funciona. <em>Ative agora.</em></h2>
+      <div class="kicker">SIMULADOR / AO VIVO</div>
+      <h2>Toque no <em>👁️</em> — veja a transformação.</h2>
     </div>
 
     <div class="demo-card reveal">
-      <div class="status-readout" id="statusReadout">
-        <span class="led"></span>
-        <span class="status-text" id="statusText">// SISTEMA EM MODO PADRÃO</span>
-        <span class="uptime">UPTIME 00:00:42</span>
-      </div>
+      <p class="demo-instruction">
+        Este é o seu painel SpyMate no celular. <strong>O botão de Modo Invisível fica no canto superior direito.</strong> Toque pra ativar.
+      </p>
 
-      <div class="phones-rig">
-        <div class="phone-frame panel-phone" id="phonePanel">
-          <span class="phone-tag">SEU PAINEL</span>
-          <div class="phone-screen">
-            <div class="scan-line"></div>
-            <div class="pp-title">SpyMate</div>
-            <div class="pp-mode-badge" id="ppBadge">PADRÃO</div>
-            <div class="pp-card"><span>Localização</span><span class="v">● 4m</span></div>
-            <div class="pp-card"><span>Mensagens</span><span class="v">17 hoje</span></div>
-            <div class="pp-card"><span>Status</span><span class="v warn" id="ppStatus">visível</span></div>
-            <div class="pp-card"><span>Última atividade</span><span class="v">há 1 min</span></div>
-            <div class="pp-card"><span>Camuflagem</span><span class="v" id="ppCam">desativada</span></div>
+      <div class="phone-wrap">
+
+        <!-- THE PHONE -->
+        <div class="phone-frame" id="phoneFrame">
+          <div class="phone-notch"></div>
+          <div class="phone-screen" id="phoneScreen">
+
+            <!-- iOS status bar -->
+            <div class="ios-status">
+              <span class="time">14:34</span>
+              <span class="right-cluster"><span>5G</span><span>87%</span></span>
+            </div>
+
+            <!-- App header w/ toggle -->
+            <div class="app-header">
+              <div class="app-logo">SpyMate<span class="dot">●</span></div>
+              <button class="toggle-eye" id="eyeToggle" onclick="toggleInvisible()" aria-label="Ativar Modo Invisível">
+                <span class="toggle-pulse-hint"></span>
+                <span class="eye-icon">👁️</span>
+                <span class="label-off">OFF</span>
+                <span class="label-on">ATIVO</span>
+              </button>
+            </div>
+
+            <!-- Mode strip -->
+            <div class="mode-strip">
+              <span class="led"></span>
+              <span id="modeText">MODO PADRÃO — VISÍVEL</span>
+            </div>
+
+            <!-- Live feed -->
+            <div class="phone-feed">
+              <div class="feed-item">
+                <span class="t">14:34</span>
+                <span class="ig">📍</span>
+                <span class="tx"><strong>Hotel Bristol</strong>, Av. Paulista</span>
+                <span class="silent-flag">🔇</span>
+              </div>
+              <div class="feed-item">
+                <span class="t">14:31</span>
+                <span class="ig">📸</span>
+                <span class="tx">WhatsApp aberto — captura</span>
+                <span class="silent-flag">🔇</span>
+              </div>
+              <div class="feed-item">
+                <span class="t">14:28</span>
+                <span class="ig">🎙️</span>
+                <span class="tx">Áudio ambiente — 4min</span>
+                <span class="silent-flag">🔇</span>
+              </div>
+              <div class="feed-item">
+                <span class="t">14:18</span>
+                <span class="ig">💬</span>
+                <span class="tx">Nova msg: <strong>"Camila ❤️"</strong></span>
+                <span class="silent-flag">🔇</span>
+              </div>
+              <div class="feed-item">
+                <span class="t">14:15</span>
+                <span class="ig">📲</span>
+                <span class="tx">Bumble detectado (ativo)</span>
+                <span class="silent-flag">🔇</span>
+              </div>
+            </div>
+
+            <!-- Bottom indicator -->
+            <div class="indicator-strip">
+              <span class="vis-label">NO APARELHO ALVO:</span>
+              <span>
+                <span class="vis-text-off">● VISÍVEL</span>
+                <span class="vis-text-on">● INDETECTÁVEL</span>
+              </span>
+            </div>
+
           </div>
         </div>
 
-        <div class="phone-frame target-phone" id="phoneTarget">
-          <span class="phone-tag">APARELHO ALVO</span>
-          <div class="phone-screen">
-            <div class="scan-line"></div>
-            <div class="home-time">14:32</div>
-            <div class="app-grid">
-              <div class="app"><div class="icon-square" style="background:#fff;color:#333">📷</div><div class="lbl">Câmera</div></div>
-              <div class="app"><div class="icon-square" style="background:#25d366">💬</div><div class="lbl">WhatsApp</div></div>
-              <div class="app spy-app"><div class="icon-square spymate"></div><div class="lbl"></div></div>
-              <div class="app"><div class="icon-square" style="background:#fff;color:#333">🎵</div><div class="lbl">Música</div></div>
-              <div class="app"><div class="icon-square" style="background:#1da1f2">𝕏</div><div class="lbl">X</div></div>
-              <div class="app"><div class="icon-square" style="background:#fff;color:#333">⚙</div><div class="lbl">Config</div></div>
+        <!-- Callout: what changes on target's phone -->
+        <div class="target-callout" id="targetCallout">
+          <div class="left">
+            <strong>↳ No celular dele(a)</strong><br>
+            o ícone do SpyMate vira:
+          </div>
+          <div class="icon-display">
+            <div class="icon-box" id="iconBox">SM</div>
+            <div class="icon-text">
+              <span>
+                <span class="name-padrao">SpyMate</span>
+                <span class="name-invisivel">Calculadora</span>
+              </span>
+              <small id="iconLabel">VISÍVEL</small>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="toggle-rig">
-        <button class="toggle-button" id="toggleBtn" onclick="toggleInvisible()">
-          <span class="switch-led"></span>
-          <span id="toggleLabel">Ativar Modo Invisível</span>
-        </button>
-        <div class="demo-hint">> Clique pra simular a ativação no produto real</div>
+        <p class="demo-action-hint">
+          <span class="arrow">↑</span> É exatamente esse 1 clique no produto real.
+        </p>
       </div>
     </div>
   </div>
@@ -1328,36 +1390,64 @@
 <section class="alt">
   <div class="container">
     <div class="section-head reveal">
-      <div class="kicker">QUADRO COMPARATIVO</div>
-      <h2>A diferença entre <em>fechar o caso</em><br>e perder tudo.</h2>
+      <div class="kicker">CENÁRIOS REAIS</div>
+      <h2>O que <em>acontece de verdade</em> em cada caminho.</h2>
     </div>
 
     <div class="compare-grid">
+
       <div class="compare-col reveal">
-        <div class="col-tag">// MODO PADRÃO</div>
+        <div class="col-tag">// SEM MODO INVISÍVEL</div>
         <div class="col-name">Civilian</div>
-        <ul class="compare-list">
-          <li><span class="check">●</span>Monitoramento completo</li>
-          <li><span class="check">○</span>Ícone do app: SpyMate fixo</li>
-          <li><span class="check">○</span>Notificações: padrão do sistema</li>
-          <li><span class="check">○</span>Atualização de OS: você se vira</li>
-          <li><span class="check">○</span>Alerta de varredura: não</li>
-          <li><span class="check">○</span>Longo prazo: casos rápidos</li>
-        </ul>
+
+        <div class="scenario">
+          <span class="when">Ele(a) varreu o celular</span>
+          <span class="what">Achou o SpyMate na lista. <strong>Game over.</strong></span>
+        </div>
+        <div class="scenario">
+          <span class="when">iOS 19 atualizou</span>
+          <span class="what">App parou de funcionar até você reinstalar. <strong>Janela exposta.</strong></span>
+        </div>
+        <div class="scenario">
+          <span class="when">Você capturou um print</span>
+          <span class="what">Apareceu badge na barra dele(a). <strong>Desconfiou.</strong></span>
+        </div>
+        <div class="scenario">
+          <span class="when">Ele(a) mexeu nas configurações</span>
+          <span class="what">Você não soube. <strong>Continuou monitorando enquanto ele(a) varria.</strong></span>
+        </div>
+        <div class="scenario">
+          <span class="when">Investigação durou +30 dias</span>
+          <span class="what">Cada dia: risco crescente. <strong>Cedo ou tarde, pego.</strong></span>
+        </div>
       </div>
 
       <div class="compare-col pro reveal">
-        <div class="col-tag">// MODO INVISÍVEL</div>
+        <div class="col-tag">// COM MODO INVISÍVEL</div>
         <div class="col-name">Tactical</div>
-        <ul class="compare-list">
-          <li><span class="check">●</span>Monitoramento completo</li>
-          <li><span class="check">●</span>Ícone do app: <strong>customizável</strong></li>
-          <li><span class="check">●</span>Notificações: <strong>silenciadas</strong></li>
-          <li><span class="check">●</span>Atualização de OS: <strong>patch auto</strong></li>
-          <li><span class="check">●</span>Alerta de varredura: <strong>tempo real</strong></li>
-          <li><span class="check">●</span>Longo prazo: <strong>casos profissionais</strong></li>
-        </ul>
+
+        <div class="scenario">
+          <span class="when">Ele(a) varreu o celular</span>
+          <span class="what">Achou só uma <strong>calculadora</strong>. Você continua dentro.</span>
+        </div>
+        <div class="scenario">
+          <span class="when">iOS 19 atualizou</span>
+          <span class="what"><strong>Patch automático no mesmo dia.</strong> Continua rodando.</span>
+        </div>
+        <div class="scenario">
+          <span class="when">Você capturou um print</span>
+          <span class="what">Chegou só pra você. <strong>Zero badge no celular dele(a).</strong></span>
+        </div>
+        <div class="scenario">
+          <span class="when">Ele(a) mexeu nas configurações</span>
+          <span class="what"><strong>Push em 4s no seu celular:</strong> "pause 30min".</span>
+        </div>
+        <div class="scenario">
+          <span class="when">Investigação durou +30 dias</span>
+          <span class="what"><strong>Sustentável.</strong> Profissionais operam meses dessa forma.</span>
+        </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -1388,8 +1478,8 @@
 <section id="offer" class="alt">
   <div class="container">
     <div class="offer-box reveal">
-      <div class="offer-tag">LIBERAÇÃO ÚNICA</div>
-      <div class="offer-title">Modo Invisível —<br><em style="font-style: italic; color: var(--amber)">acesso vitalício</em></div>
+      <div class="offer-tag">DESBLOQUEIO ÚNICO</div>
+      <div class="offer-title">Modo Invisível —<br><em>acesso vitalício</em></div>
 
       <div class="price-cluster">
         <span class="price-old">$97</span>
@@ -1397,11 +1487,16 @@
       </div>
       <div class="price-context">PREÇO DE CLIENTE SPYMATE · APENAS NESTA PÁGINA</div>
 
+      <div class="why-discount">
+        <span class="label">POR QUE $37 E NÃO $97</span>
+        Você acabou de mostrar que vai usar o SpyMate sério. Esse desconto é pra quem entra com a stack completa — não pra quem chega no nosso site depois. <strong>Quando essa página fechar, o preço volta pra $97 pra você também.</strong>
+      </div>
+
       <div class="offer-bullets">
         <div class="offer-bullet"><span class="x">+</span><span><strong>Vitalício</strong> — paga uma vez, usa pra sempre</span></div>
-        <div class="offer-bullet"><span class="x">+</span><span><strong>Garantia 30 dias</strong> — se for detectado, 100% de volta sem perguntar</span></div>
-        <div class="offer-bullet"><span class="x">+</span><span><strong>Ativação imediata</strong> — mesmo cartão, 1 clique</span></div>
-        <div class="offer-bullet"><span class="x">+</span><span><strong>Patches automáticos</strong> — toda atualização de OS, novo patch</span></div>
+        <div class="offer-bullet"><span class="x">+</span><span><strong>Garantia 30 dias</strong> — se for detectado(a), 100% de volta sem perguntar</span></div>
+        <div class="offer-bullet"><span class="x">+</span><span><strong>1 clique</strong> pra ativar, 1 clique pra desativar — sem reinstalar nada</span></div>
+        <div class="offer-bullet"><span class="x">+</span><span><strong>Patches vitalícios</strong> — toda atualização de OS do alvo, novo patch automático</span></div>
       </div>
 
       <div class="timer-row" id="timerRow">
@@ -1410,12 +1505,12 @@
       </div>
 
       <a href="#" class="cta" onclick="event.preventDefault();handleBuy()">
-        Sim, ativar Modo Invisível — $37
+        Sim, blindar meu SpyMate — $37
       </a>
       <span class="cta-subtext">mesmo cartão · acesso instantâneo</span>
 
       <a class="decline-link" onclick="handleDecline()">
-        Não, prefiro arriscar investigar visível →
+        Não — prefiro arriscar perder os $97 pra economizar $37 →
       </a>
     </div>
   </div>
@@ -1426,8 +1521,9 @@
   <div class="container">
     <div class="ps-frame reveal">
       <p class="ps-text">
-        Mesma investigação. <em>Outro nível.</em><br>
-        Outro tempo de jogo.
+        Você abriu essa página por uma razão.<br>
+        Você sabe que ele(a) <em>é cuidadoso(a).</em><br>
+        $37 hoje. Ou um ano de "será que era?".
       </p>
       <div class="ps-sig">— FIM DO ARQUIVO //</div>
     </div>
@@ -1436,71 +1532,58 @@
 
 <!-- Sticky mobile CTA -->
 <div class="sticky-cta" id="stickyCta">
-  <a href="#offer" class="cta">Ativar Modo Invisível — $37</a>
+  <a href="#offer" class="cta">Blindar meu SpyMate — $37</a>
 </div>
 
 <script>
-  // ---- INTERACTIVE TOGGLE ----
+  // INTERACTIVE TOGGLE
   let isInvisible = false;
 
   function toggleInvisible() {
-    const panel = document.getElementById('phonePanel');
-    const target = document.getElementById('phoneTarget');
-    const btn = document.getElementById('toggleBtn');
-    const lbl = document.getElementById('toggleLabel');
-    const sr = document.getElementById('statusReadout');
-    const st = document.getElementById('statusText');
-    const ppBadge = document.getElementById('ppBadge');
-    const ppStatus = document.getElementById('ppStatus');
-    const ppCam = document.getElementById('ppCam');
+    const frame = document.getElementById('phoneFrame');
+    const screen = document.getElementById('phoneScreen');
+    const btn = document.getElementById('eyeToggle');
+    const modeText = document.getElementById('modeText');
+    const callout = document.getElementById('targetCallout');
+    const iconBox = document.getElementById('iconBox');
+    const iconLabel = document.getElementById('iconLabel');
 
-    // scan line wipe first
-    panel.classList.add('scanning');
-    target.classList.add('scanning');
-    setTimeout(() => {
-      panel.classList.remove('scanning');
-      target.classList.remove('scanning');
-    }, 900);
+    // Scan-line wipe
+    frame.classList.add('scanning');
+    setTimeout(() => frame.classList.remove('scanning'), 900);
 
     setTimeout(() => {
       isInvisible = !isInvisible;
       if (isInvisible) {
-        panel.classList.add('invisible');
-        target.classList.add('invisible');
-        sr.classList.add('invisible');
+        screen.classList.add('invisible');
         btn.classList.add('active');
-        lbl.textContent = 'Desativar Modo Invisível';
-        // simulate "encrypting" text
+        callout.classList.add('invisible');
+        iconBox.classList.add('invisible');
+        iconBox.textContent = '🧮';
+        iconLabel.textContent = 'CAMUFLADO';
+
+        // type-write modetext
+        const target = 'MODO INVISÍVEL — ATIVO';
+        modeText.textContent = '';
         let i = 0;
-        const targetText = '// MODO INVISÍVEL ATIVO';
-        st.textContent = '';
         const ti = setInterval(() => {
-          st.textContent += targetText[i];
+          modeText.textContent += target[i];
           i++;
-          if (i >= targetText.length) clearInterval(ti);
+          if (i >= target.length) clearInterval(ti);
         }, 25);
-        ppBadge.textContent = 'INVISÍVEL';
-        ppStatus.textContent = 'indetectável';
-        ppStatus.classList.remove('warn');
-        ppStatus.classList.add('ok');
-        ppCam.textContent = 'ativa';
       } else {
-        panel.classList.remove('invisible');
-        target.classList.remove('invisible');
-        sr.classList.remove('invisible');
+        screen.classList.remove('invisible');
         btn.classList.remove('active');
-        lbl.textContent = 'Ativar Modo Invisível';
-        st.textContent = '// SISTEMA EM MODO PADRÃO';
-        ppBadge.textContent = 'PADRÃO';
-        ppStatus.textContent = 'visível';
-        ppStatus.classList.remove('ok');
-        ppStatus.classList.add('warn');
-        ppCam.textContent = 'desativada';
+        callout.classList.remove('invisible');
+        iconBox.classList.remove('invisible');
+        iconBox.textContent = 'SM';
+        iconLabel.textContent = 'VISÍVEL';
+        modeText.textContent = 'MODO PADRÃO — VISÍVEL';
       }
     }, 350);
   }
 
-  // ---- TIMER ----
+  // TIMER
   let totalSeconds = 4 * 60 + 51;
   const timerEl = document.getElementById('timer');
   const timerRow = document.getElementById('timerRow');
@@ -1517,7 +1600,7 @@
   }
   setInterval(tick, 1000);
 
-  // ---- REVEAL ON SCROLL ----
+  // REVEAL
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
@@ -1528,7 +1611,7 @@
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  // ---- STICKY CTA AFTER HERO ----
+  // STICKY CTA
   const stickyCta = document.getElementById('stickyCta');
   const heroH = document.querySelector('.hero').offsetHeight;
   let stickyShown = false;
@@ -1543,7 +1626,6 @@
   }, { passive: true });
 
   function handleBuy() {
-    // placeholder — replace with funnel checkout URL
     alert("→ checkout do funil aqui");
   }
   function handleDecline() {
