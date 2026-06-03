@@ -1,0 +1,1638 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0c0a08">
+<title>MODE INVISIBLE // DOSSIER D'OPÉRATIONS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700;800&family=Sora:wght@300;400;500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:           #0c0a08;
+    --bg-2:         #15110d;
+    --bg-card:      #1a1612;
+    --bg-elev:      #221d17;
+    --ink:          #ebe4d2;
+    --ink-dim:      #8a8275;
+    --ink-faint:    #4a463d;
+    --rule:         #2a2520;
+    --rule-bright:  #3d362d;
+    --red:          #d8332f;
+    --red-soft:     #ed5e5a;
+    --red-glow:     rgba(216, 51, 47, 0.4);
+    --amber:        #d9a441;
+    --amber-soft:   #f0c168;
+    --green:        #5bd97b;
+    --green-glow:   rgba(91, 217, 123, 0.4);
+    --paper:        #1f1a14;
+
+    --serif:    'Instrument Serif', Georgia, serif;
+    --mono:     'JetBrains Mono', ui-monospace, monospace;
+    --sans:     'Sora', system-ui, sans-serif;
+    --stamp:    'Special Elite', 'Courier New', monospace;
+  }
+
+  *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    font-weight: 400;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 1;
+    opacity: 0.35;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.15 0 0 0 0 0.13 0 0 0 0 0.1 0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    mix-blend-mode: overlay;
+  }
+  body::after {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 2;
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.55) 100%);
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 5vw, 36px);
+    position: relative;
+    z-index: 3;
+  }
+
+  /* CLASSIFIED BAR */
+  .classified-bar {
+    background: var(--red); color: white;
+    text-align: center;
+    padding: 10px clamp(16px, 4vw, 28px);
+    position: sticky; top: 0; z-index: 50;
+    font-family: var(--mono);
+    font-size: clamp(11px, 2.8vw, 13px);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+  }
+  .classified-bar .pulse {
+    width: 8px; height: 8px; border-radius: 50%; background: white;
+    animation: pulse-dot 1.5s ease-in-out infinite;
+    box-shadow: 0 0 8px rgba(255,255,255,0.7);
+  }
+  @keyframes pulse-dot {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+
+  /* HERO */
+  .hero { padding: clamp(36px, 9vw, 72px) 0 clamp(28px, 6vw, 48px); position: relative; }
+  .hero .meta-line {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: clamp(20px, 5vw, 32px);
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    flex-wrap: wrap; gap: 8px;
+  }
+  .hero .meta-line .file-id { color: var(--amber); }
+
+  .hero .file-stamp {
+    display: inline-block;
+    border: 2px solid var(--red);
+    color: var(--red-soft);
+    padding: 4px 12px;
+    font-family: var(--stamp);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transform: rotate(-2deg);
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(42px, 10.5vw, 84px);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    margin-bottom: 24px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--red-soft);
+    display: block;
+  }
+
+  .hero .lede {
+    font-family: var(--sans);
+    font-size: clamp(16px, 4vw, 19px);
+    line-height: 1.55;
+    max-width: 560px;
+    color: var(--ink);
+    margin-bottom: clamp(28px, 6vw, 40px);
+  }
+  .hero .lede strong { color: var(--amber-soft); font-weight: 600; }
+  .hero .lede .breakline { display: block; margin-top: 12px; }
+  .hero .lede .math {
+    font-family: var(--mono);
+    color: var(--red-soft);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    display: block;
+    margin-top: 12px;
+    font-size: clamp(14px, 3.5vw, 17px);
+  }
+
+  /* HERO LIVE FEED PANEL */
+  .feed-panel {
+    background: var(--paper);
+    border: 1px solid var(--rule-bright);
+    padding: 0;
+    margin: clamp(28px, 6vw, 40px) 0;
+    position: relative;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.03),
+      0 24px 60px -20px rgba(0,0,0,0.7);
+  }
+  .feed-panel::before {
+    content: "PAINEL ATIVO — LIVE FEED";
+    position: absolute;
+    top: -10px; left: 16px;
+    background: var(--bg);
+    padding: 0 10px;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 0.18em;
+  }
+  .feed-head {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: clamp(16px, 4vw, 22px) clamp(16px, 4vw, 22px) 12px;
+    border-bottom: 1px dashed var(--rule);
+    flex-wrap: wrap; gap: 8px;
+  }
+  .feed-head .title {
+    font-family: var(--serif);
+    font-size: clamp(18px, 4.5vw, 22px);
+    font-style: italic;
+  }
+  .feed-status {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(91, 217, 123, 0.08);
+    border: 1px solid var(--green);
+    color: var(--green);
+    padding: 5px 10px;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+  }
+  .feed-status .dot {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--green);
+    box-shadow: 0 0 6px var(--green-glow);
+    animation: pulse-dot 1.5s ease-in-out infinite;
+  }
+  .feed-list {
+    list-style: none;
+    padding: 0;
+  }
+  .feed-list li {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    gap: 10px;
+    padding: 12px clamp(16px, 4vw, 22px);
+    border-bottom: 1px dotted var(--rule);
+    font-family: var(--mono);
+    font-size: clamp(11px, 2.9vw, 13px);
+    line-height: 1.5;
+    align-items: baseline;
+    color: var(--ink);
+  }
+  .feed-list li:last-child { border-bottom: none; }
+  .feed-list .time { color: var(--ink-dim); }
+  .feed-list .glyph { font-family: var(--sans); font-size: 14px; }
+  .feed-list .desc strong { color: var(--amber-soft); font-weight: 600; }
+  .feed-list .desc .new-flag {
+    color: var(--red); font-family: var(--mono); font-size: 9px; font-weight: 800;
+    letter-spacing: 0.15em;
+    padding: 2px 6px;
+    border: 1px solid var(--red);
+    margin-left: 6px;
+  }
+  .feed-foot {
+    padding: 12px clamp(16px, 4vw, 22px);
+    border-top: 1px dashed var(--rule);
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px;
+  }
+  .feed-foot .indetect { color: var(--green); font-weight: 800; }
+
+  /* CTA */
+  .cta-block { margin-top: clamp(28px, 6vw, 40px); }
+  .cta {
+    display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+    width: 100%;
+    background: var(--red);
+    color: white;
+    padding: clamp(18px, 4vw, 22px) clamp(20px, 5vw, 32px);
+    font-family: var(--mono);
+    font-weight: 800;
+    font-size: clamp(14px, 3.5vw, 16px);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    border: 1px solid var(--red);
+    border-bottom-width: 4px;
+    cursor: pointer;
+    transition: transform 0.12s ease;
+    box-shadow:
+      0 6px 0 -1px rgba(0,0,0,0.4),
+      0 16px 40px -8px var(--red-glow);
+    position: relative;
+    overflow: hidden;
+  }
+  .cta:hover { transform: translateY(-2px); }
+  .cta:active { transform: translateY(2px); border-bottom-width: 1px; }
+  .cta::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.18) 50%, transparent 70%);
+    transform: translateX(-100%);
+    animation: shine 3s ease-in-out infinite;
+  }
+  @keyframes shine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(200%); }
+  }
+  .cta-subtext {
+    display: block; text-align: center; margin-top: 12px;
+    font-family: var(--mono); font-size: 11px;
+    color: var(--ink-dim); letter-spacing: 0.1em; text-transform: uppercase;
+  }
+
+  /* SECTION */
+  section { padding: clamp(50px, 11vw, 96px) 0; position: relative; }
+  section.alt { background: var(--bg-2); }
+  .section-head { margin-bottom: clamp(32px, 7vw, 52px); }
+  .section-head .kicker {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--red);
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-head .kicker::before {
+    content: ""; display: inline-block;
+    width: 32px; height: 2px; background: var(--red);
+  }
+  .section-head h2 {
+    font-family: var(--serif);
+    font-size: clamp(34px, 8vw, 60px);
+    font-weight: 400;
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+  }
+  .section-head h2 em { font-style: italic; color: var(--red-soft); }
+
+  /* STAKES */
+  .stakes-list { display: grid; gap: clamp(16px, 4vw, 22px); }
+  .stake-row {
+    display: grid;
+    grid-template-columns: clamp(80px, 22vw, 110px) 1fr;
+    gap: clamp(16px, 4vw, 24px);
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    padding: clamp(20px, 5vw, 28px);
+    align-items: center;
+    position: relative;
+  }
+  .stake-row::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--red);
+  }
+  .stake-time {
+    text-align: center;
+    font-family: var(--serif);
+    color: var(--red-soft);
+  }
+  .stake-time .num {
+    display: block;
+    font-size: clamp(36px, 9vw, 56px);
+    line-height: 1;
+    font-style: italic;
+  }
+  .stake-time .unit {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .stake-body h3 {
+    font-family: var(--serif);
+    font-size: clamp(22px, 5vw, 28px);
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+  .stake-body p {
+    font-family: var(--sans);
+    font-size: clamp(14px, 3.5vw, 15px);
+    line-height: 1.55;
+    color: var(--ink-dim);
+  }
+  .stake-body p strong { color: var(--amber-soft); font-weight: 600; }
+  .stakes-closer {
+    margin-top: clamp(28px, 6vw, 40px);
+    padding: clamp(20px, 4vw, 24px);
+    border-top: 1px solid var(--rule-bright);
+    border-bottom: 1px solid var(--rule-bright);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(18px, 4vw, 24px);
+    text-align: center;
+    color: var(--amber-soft);
+    line-height: 1.35;
+  }
+
+  /* LAYERS */
+  .layers { display: grid; gap: clamp(20px, 4vw, 28px); }
+  .layer {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: clamp(14px, 3vw, 20px);
+    padding: clamp(20px, 4vw, 28px) 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: start;
+  }
+  .layer:last-child { border-bottom: none; }
+  .layer-num {
+    font-family: var(--mono);
+    font-size: clamp(36px, 9vw, 56px);
+    font-weight: 800;
+    line-height: 1;
+    -webkit-text-stroke: 1px var(--amber);
+    color: transparent;
+  }
+  .layer-body h3 {
+    font-family: var(--serif);
+    font-size: clamp(22px, 5.5vw, 30px);
+    font-weight: 400;
+    margin-bottom: 4px;
+    line-height: 1.15;
+  }
+  .layer-body h3 em { font-style: italic; color: var(--amber-soft); }
+  .layer-body .tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--red);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: block;
+  }
+  .layer-body .moment {
+    margin-top: 14px;
+    padding: 14px 16px;
+    background: var(--bg-card);
+    border-left: 3px solid var(--green);
+    font-family: var(--sans);
+    font-size: clamp(13px, 3.3vw, 14px);
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .layer-body .moment .label {
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 800;
+    color: var(--green);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .layer-body .moment strong { color: var(--amber-soft); font-weight: 600; }
+
+  /* DEMO SECTION */
+  .demo-section {
+    background:
+      radial-gradient(ellipse at top, rgba(216, 51, 47, 0.08), transparent 60%),
+      var(--bg);
+    position: relative;
+    overflow: hidden;
+  }
+  .demo-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  .demo-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--rule-bright);
+    padding: clamp(20px, 5vw, 32px);
+    position: relative;
+    overflow: hidden;
+  }
+  .demo-card::before {
+    content: "INTERATIVO";
+    position: absolute;
+    top: 14px; right: -32px;
+    background: var(--amber);
+    color: var(--bg);
+    padding: 4px 36px;
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    transform: rotate(45deg);
+    text-transform: uppercase;
+  }
+  .demo-instruction {
+    text-align: center;
+    font-family: var(--mono);
+    font-size: clamp(11px, 2.8vw, 13px);
+    color: var(--ink-dim);
+    margin-bottom: clamp(24px, 5vw, 32px);
+    letter-spacing: 0.08em;
+  }
+  .demo-instruction strong { color: var(--amber-soft); }
+
+  /* PHONE FRAME — single */
+  .phone-wrap {
+    display: flex; flex-direction: column; align-items: center;
+    gap: clamp(20px, 4vw, 28px);
+  }
+  .phone-frame {
+    background: #050505;
+    border: 1px solid #1a1a1a;
+    border-radius: 36px;
+    padding: 9px;
+    position: relative;
+    width: 100%;
+    max-width: 320px;
+    aspect-ratio: 9 / 19;
+    box-shadow:
+      inset 0 0 0 2px #000,
+      inset 0 0 0 3px #1a1a1a,
+      0 30px 80px -20px rgba(0,0,0,0.9);
+  }
+  .phone-notch {
+    content: "";
+    position: absolute;
+    top: 12px; left: 50%; transform: translateX(-50%);
+    width: 80px; height: 22px;
+    background: #000;
+    border-radius: 0 0 16px 16px;
+    z-index: 20;
+  }
+  .phone-screen {
+    height: 100%;
+    border-radius: 28px;
+    overflow: hidden;
+    position: relative;
+    display: flex; flex-direction: column;
+    background: #fafaf7;
+    color: #1a1a1a;
+    transition: background 0.5s ease, color 0.5s ease;
+  }
+  .phone-screen.invisible {
+    background: #0a0907;
+    color: #ebe4d2;
+  }
+  /* iOS-style status bar */
+  .ios-status {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 22px 6px;
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 700;
+    color: inherit;
+    height: 34px;
+  }
+  .ios-status .time { font-variant-numeric: tabular-nums; }
+  .ios-status .right-cluster {
+    display: flex; align-items: center; gap: 4px;
+    font-size: 10px;
+  }
+  /* App header */
+  .app-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 14px 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    transition: border-color 0.5s ease;
+  }
+  .phone-screen.invisible .app-header { border-color: rgba(255,255,255,0.08); }
+  .app-logo {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .app-logo .dot { color: var(--red); }
+
+  /* THE TOGGLE — top right of the app header */
+  .toggle-eye {
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(216, 51, 47, 0.1);
+    border: 1px solid var(--red);
+    color: var(--red);
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+    min-height: 32px;
+    position: relative;
+  }
+  .toggle-eye .eye-icon { font-size: 13px; line-height: 1; }
+  .toggle-eye:hover { background: rgba(216, 51, 47, 0.18); }
+  .toggle-eye.active {
+    background: rgba(91, 217, 123, 0.15);
+    border-color: var(--green);
+    color: var(--green);
+    box-shadow: 0 0 14px var(--green-glow);
+  }
+  .toggle-eye .label-off { display: inline; }
+  .toggle-eye .label-on { display: none; }
+  .toggle-eye.active .label-off { display: none; }
+  .toggle-eye.active .label-on { display: inline; }
+  .toggle-pulse-hint {
+    position: absolute;
+    top: -2px; right: -2px;
+    width: 8px; height: 8px;
+    background: var(--amber);
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 var(--amber);
+    animation: nudge 1.6s ease-in-out infinite;
+  }
+  .toggle-eye.active .toggle-pulse-hint { display: none; }
+  @keyframes nudge {
+    0%,100% { box-shadow: 0 0 0 0 rgba(217, 164, 65, 0.7); }
+    50% { box-shadow: 0 0 0 8px rgba(217, 164, 65, 0); }
+  }
+
+  /* Mode indicator */
+  .mode-strip {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 14px;
+    background: rgba(216, 51, 47, 0.08);
+    color: var(--red);
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: all 0.5s ease;
+  }
+  .phone-screen.invisible .mode-strip {
+    background: rgba(91, 217, 123, 0.1);
+    color: var(--green);
+  }
+  .mode-strip .led {
+    width: 8px; height: 8px; border-radius: 50%; background: currentColor;
+    box-shadow: 0 0 6px currentColor;
+  }
+
+  /* Live feed inside phone */
+  .phone-feed {
+    flex: 1;
+    overflow: hidden;
+    padding: 4px 0;
+  }
+  .feed-item {
+    display: grid;
+    grid-template-columns: auto auto 1fr auto;
+    gap: 8px;
+    align-items: center;
+    padding: 10px 14px;
+    font-family: var(--mono);
+    font-size: 10px;
+    line-height: 1.4;
+    border-bottom: 1px dotted rgba(0,0,0,0.08);
+    color: inherit;
+    transition: all 0.3s ease;
+  }
+  .phone-screen.invisible .feed-item { border-color: rgba(255,255,255,0.08); }
+  .feed-item .t { color: rgba(0,0,0,0.5); font-weight: 500; }
+  .phone-screen.invisible .feed-item .t { color: rgba(255,255,255,0.4); }
+  .feed-item .ig { font-family: var(--sans); font-size: 12px; line-height: 1; }
+  .feed-item .tx {
+    font-family: var(--sans);
+    font-size: 10px;
+    line-height: 1.3;
+    font-weight: 500;
+    color: inherit;
+  }
+  .feed-item .tx strong { font-weight: 700; }
+  .feed-item .silent-flag {
+    display: none;
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--green);
+    font-weight: 800;
+  }
+  .phone-screen.invisible .feed-item .silent-flag { display: inline-block; }
+
+  /* Bottom indicator strip */
+  .indicator-strip {
+    background: rgba(0,0,0,0.04);
+    padding: 10px 14px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: flex; justify-content: space-between; align-items: center;
+    transition: all 0.5s ease;
+  }
+  .phone-screen.invisible .indicator-strip {
+    background: rgba(255,255,255,0.04);
+    border-color: rgba(255,255,255,0.08);
+  }
+  .indicator-strip .vis-label { font-weight: 700; }
+  .indicator-strip .vis-text-off { display: inline; color: var(--red); }
+  .indicator-strip .vis-text-on { display: none; color: var(--green); }
+  .phone-screen.invisible .vis-text-off { display: none; }
+  .phone-screen.invisible .vis-text-on { display: inline; }
+
+  /* Scan-line wipe */
+  .phone-screen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(91, 217, 123, 0.5) 50%, transparent 100%);
+    height: 30%;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-100%);
+    z-index: 20;
+  }
+  .phone-frame.scanning .phone-screen::after {
+    opacity: 1;
+    animation: scan 0.9s ease-in-out;
+  }
+  @keyframes scan {
+    0% { transform: translateY(-100%); opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { transform: translateY(380%); opacity: 0; }
+  }
+
+  /* Callout card next to/below phone */
+  .target-callout {
+    width: 100%;
+    max-width: 320px;
+    background: var(--bg-card);
+    border: 1px solid var(--rule-bright);
+    padding: 14px 16px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 14px;
+    align-items: center;
+  }
+  .target-callout .left {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-dim);
+    letter-spacing: 0.05em;
+  }
+  .target-callout .left strong { color: var(--ink); font-weight: 700; }
+  .target-callout .icon-display {
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-dim);
+  }
+  .target-callout .icon-box {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    background: linear-gradient(135deg, #d8332f, #a01e1a);
+    color: white;
+    font-family: var(--mono);
+    font-weight: 800;
+    transition: all 0.5s ease;
+  }
+  .target-callout .icon-box.invisible {
+    background: linear-gradient(135deg, #2a2520, #15110d);
+    color: var(--ink);
+  }
+  .target-callout .icon-text {
+    display: flex; flex-direction: column;
+  }
+  .target-callout .icon-text small {
+    color: var(--ink-faint); font-size: 9px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+  }
+  .target-callout .icon-text .name-padrao { display: inline; }
+  .target-callout .icon-text .name-invisivel { display: none; }
+  .target-callout.invisible .icon-text .name-padrao { display: none; }
+  .target-callout.invisible .icon-text .name-invisivel { display: inline; }
+
+  .demo-action-hint {
+    text-align: center;
+    margin-top: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.08em;
+  }
+  .demo-action-hint .arrow {
+    color: var(--amber);
+    font-weight: 800;
+  }
+
+  /* COMPARISON */
+  .compare-grid {
+    display: grid;
+    gap: clamp(20px, 4vw, 28px);
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 640px) {
+    .compare-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .compare-col {
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    padding: clamp(22px, 5vw, 30px);
+    position: relative;
+  }
+  .compare-col.pro {
+    border-color: var(--green);
+    background: linear-gradient(180deg, rgba(91, 217, 123, 0.04), var(--bg-card));
+  }
+  .compare-col .col-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--ink-dim);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .compare-col.pro .col-tag { color: var(--green); }
+  .compare-col .col-name {
+    font-family: var(--serif);
+    font-size: clamp(28px, 6vw, 36px);
+    font-style: italic;
+    margin-bottom: 22px;
+    line-height: 1;
+  }
+  .compare-col.pro .col-name { color: var(--green); }
+  .scenario {
+    padding: 14px 0;
+    border-top: 1px dotted var(--rule);
+    font-size: clamp(13px, 3.3vw, 14px);
+    line-height: 1.5;
+  }
+  .scenario:first-of-type { border-top: 1px solid var(--rule-bright); }
+  .scenario .when {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-dim);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    display: block;
+  }
+  .scenario .what { color: var(--ink); }
+  .scenario .what strong { color: var(--amber-soft); font-weight: 600; }
+  .compare-col.pro .scenario .what strong { color: var(--green); }
+
+  /* AUTHORITY */
+  .authority {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(20px, 4vw, 30px);
+    align-items: start;
+  }
+  @media (min-width: 560px) {
+    .authority { grid-template-columns: 130px 1fr; }
+  }
+  .authority-portrait {
+    background: var(--bg-card);
+    border: 1px solid var(--rule-bright);
+    aspect-ratio: 1;
+    max-width: 130px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif);
+    font-size: 64px;
+    font-style: italic;
+    color: var(--amber);
+    position: relative;
+  }
+  .authority-portrait::after {
+    content: "FILE 014";
+    position: absolute;
+    bottom: -10px; left: 50%; transform: translateX(-50%);
+    background: var(--bg);
+    padding: 2px 10px;
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--ink-dim);
+    letter-spacing: 0.15em;
+  }
+  .authority-body .auth-tag {
+    font-family: var(--mono); font-size: 10px;
+    color: var(--amber); letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .authority-body .auth-name {
+    font-family: var(--serif);
+    font-size: clamp(28px, 6vw, 36px);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .authority-body .auth-role {
+    font-family: var(--mono); font-size: 12px;
+    color: var(--ink-dim); margin-bottom: 18px; letter-spacing: 0.05em;
+  }
+  .auth-quote {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(17px, 4vw, 22px);
+    line-height: 1.45;
+    color: var(--ink);
+    padding-left: 16px;
+    border-left: 3px solid var(--red);
+    margin-top: 18px;
+  }
+
+  /* OFFER */
+  .offer-box {
+    background: var(--bg-card);
+    border: 1px solid var(--rule-bright);
+    padding: clamp(26px, 6vw, 42px);
+    position: relative;
+    text-align: center;
+  }
+  .offer-box::before, .offer-box::after {
+    content: ""; position: absolute;
+    width: 32px; height: 32px;
+    border: 2px solid var(--red);
+  }
+  .offer-box::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+  .offer-box::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+  .offer-tag {
+    font-family: var(--stamp);
+    font-size: 12px; color: var(--red-soft);
+    letter-spacing: 0.15em; text-transform: uppercase;
+    margin-bottom: 14px;
+    display: inline-block;
+    padding: 4px 14px;
+    border: 1px solid var(--red);
+    transform: rotate(-1.5deg);
+  }
+  .offer-title {
+    font-family: var(--serif);
+    font-size: clamp(28px, 6vw, 40px);
+    line-height: 1;
+    margin: 18px 0;
+  }
+  .offer-title em { font-style: italic; color: var(--amber); }
+  .price-cluster {
+    display: flex; justify-content: center; align-items: baseline; gap: 18px;
+    margin: 30px 0 12px;
+  }
+  .price-old {
+    font-family: var(--mono);
+    font-size: clamp(20px, 4vw, 24px);
+    color: var(--ink-faint);
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+  }
+  .price-new {
+    font-family: var(--serif);
+    font-size: clamp(72px, 18vw, 112px);
+    font-weight: 400;
+    color: var(--amber);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+  }
+  .price-context {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .why-discount {
+    background: var(--bg-2);
+    border-left: 3px solid var(--amber);
+    padding: 14px 18px;
+    text-align: left;
+    margin: 0 auto 28px;
+    max-width: 460px;
+    font-family: var(--sans);
+    font-size: clamp(13px, 3.3vw, 14px);
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .why-discount .label {
+    display: block;
+    font-family: var(--mono); font-size: 10px;
+    color: var(--amber); letter-spacing: 0.15em; text-transform: uppercase;
+    margin-bottom: 6px; font-weight: 800;
+  }
+  .why-discount strong { color: var(--amber-soft); font-weight: 600; }
+
+  .offer-bullets {
+    text-align: left;
+    max-width: 460px;
+    margin: 0 auto 28px;
+    display: grid; gap: 12px;
+  }
+  .offer-bullet {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 12px;
+    font-family: var(--sans);
+    font-size: clamp(14px, 3.5vw, 15px);
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .offer-bullet .x { color: var(--green); font-family: var(--mono); font-weight: 800; }
+  .offer-bullet strong { color: var(--amber-soft); font-weight: 600; }
+
+  .timer-row {
+    background: var(--bg-2);
+    border-top: 1px dashed var(--rule-bright);
+    border-bottom: 1px dashed var(--rule-bright);
+    padding: 16px;
+    margin: 22px 0 26px;
+    text-align: center;
+  }
+  .timer-row .timer-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-dim);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    display: block;
+  }
+  .timer-row .timer-clock {
+    font-family: var(--mono);
+    font-size: clamp(36px, 9vw, 52px);
+    font-weight: 800;
+    color: var(--red-soft);
+    letter-spacing: 0.05em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0 0 16px var(--red-glow);
+  }
+  .timer-row.expired .timer-clock { color: var(--ink-faint); text-shadow: none; }
+
+  .decline-link {
+    display: block;
+    margin-top: 20px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-faint);
+    text-align: center;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    line-height: 1.55;
+    text-transform: none;
+    padding: 0 10px;
+  }
+  .decline-link:hover { color: var(--ink-dim); }
+
+  /* PS */
+  .ps-block {
+    padding: clamp(60px, 12vw, 100px) 0;
+    text-align: center;
+  }
+  .ps-block .ps-frame {
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: clamp(32px, 6vw, 48px) 0;
+  }
+  .ps-block .ps-text {
+    font-family: var(--serif);
+    font-size: clamp(22px, 5vw, 36px);
+    line-height: 1.25;
+    font-style: italic;
+    max-width: 560px;
+    margin: 0 auto;
+    color: var(--ink);
+  }
+  .ps-block .ps-text em {
+    font-style: normal;
+    color: var(--red-soft);
+    display: block;
+    font-family: var(--serif);
+    margin: 4px 0;
+  }
+  .ps-block .ps-sig {
+    margin-top: 24px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  /* Sticky mobile CTA */
+  .sticky-cta {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(180deg, transparent, var(--bg) 40%);
+    padding: 16px clamp(16px, 4vw, 24px) max(16px, env(safe-area-inset-bottom));
+    z-index: 40;
+    transition: transform 0.4s ease;
+    transform: translateY(100%);
+  }
+  .sticky-cta.visible { transform: translateY(0); }
+  .sticky-cta .cta {
+    box-shadow: 0 8px 30px -8px var(--red-glow), 0 -2px 16px rgba(0,0,0,0.6);
+  }
+
+  /* Reveal on scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 480px) {
+    .stake-row { grid-template-columns: 80px 1fr; gap: 14px; padding: 18px 16px; }
+    .stake-time .num { font-size: 38px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- CLASSIFIED BAR -->
+<div class="classified-bar">
+  <span class="pulse"></span>
+  <span>DERNIÈRE ÉTAPE // NE PAS FERMER</span>
+  <span class="pulse"></span>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="container">
+    <div class="meta-line">
+      <span>FILE <span class="file-id">// SM-INV-2026-Δ</span></span>
+      <span>STATUT / OUVERT</span>
+    </div>
+
+    <div class="file-stamp reveal">— VERROU DE SÉCURITÉ EN ATTENTE —</div>
+
+    <h1 class="reveal">Mode Invisible<br><em>fait disparaître Deepen AI du téléphone surveillé.</em></h1>
+
+    <p class="lede reveal">
+      Camoufle l'application sur l'appareil surveillé : l'icône devient une <strong>calculatrice</strong>, <strong>zéro notification</strong> n'apparaît, et le nom disparaît des paramètres.<br>
+      <span class="breakline">En <strong>30 secondes</strong> sans cela, il/elle ouvre le gestionnaire d'applications, trouve Deepen AI, et <strong>efface TOUT</strong>.</span>
+      <span class="math">→ Avec cela, il/elle peut fouiller tout le téléphone et ne trouvera rien.</span>
+    </p>
+
+    <!-- Live surveillance feed panel -->
+    <div class="feed-panel reveal">
+      <div class="feed-head">
+        <span class="title">Deepen AI / OPÉRATION 14</span>
+        <span class="feed-status"><span class="dot"></span>INVISIBLE ACTIF</span>
+      </div>
+      <ul class="feed-list">
+        <li><span class="time">14:34</span><span class="glyph">📍</span><span class="desc">Sujet entré : <strong>Hôtel Bristol</strong> — Champs-Élysées</span></li>
+        <li><span class="time">14:31</span><span class="glyph">📸</span><span class="desc">Capture — <strong>WhatsApp ouvert</strong></span></li>
+        <li><span class="time">14:28</span><span class="glyph">🎙️</span><span class="desc">Audio ambiant — 4min enregistrés</span></li>
+        <li><span class="time">14:22</span><span class="glyph">📍</span><span class="desc">Sortie : Bureau Av. Foch</span></li>
+        <li><span class="time">14:18</span><span class="glyph">💬</span><span class="desc">Nouveau msg : "<strong>Camille ❤️</strong>"<span class="new-flag">NOUVEAU</span></span></li>
+        <li><span class="time">14:15</span><span class="glyph">📲</span><span class="desc">Appli rencontre détectée : <strong>Bumble</strong> (actif)</span></li>
+      </ul>
+      <div class="feed-foot">
+        <span>UPTIME 03:14:22</span>
+        <span class="indetect">→ SUR L'APPAREIL : INDÉTECTABLE</span>
+      </div>
+    </div>
+
+    <div class="cta-block reveal">
+      <a href="#offer" class="cta">
+        Activer Mode Invisible — 37 $
+      </a>
+      <span class="cta-subtext">à vie · 1 clic · garantie 30 jours</span>
+    </div>
+  </div>
+</header>
+
+<!-- STAKES -->
+<section class="alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="kicker">CHRONOMÉTRÉ / RÉEL</div>
+      <h2>Ce qui arrive quand il/elle découvre — <em>chronométré.</em></h2>
+    </div>
+
+    <div class="stakes-list">
+
+      <div class="stake-row reveal">
+        <div class="stake-time">
+          <span class="num">30s</span>
+          <span class="unit">SECONDES</span>
+        </div>
+        <div class="stake-body">
+          <h3>Tout le WhatsApp est effacé.</h3>
+          <p>Historiques, audios, photos, messages avec l'autre personne. <strong>Toute la preuve que vous avez mis des semaines à rassembler — effacée avant que vous ne puissiez confronter.</strong></p>
+        </div>
+      </div>
+
+      <div class="stake-row reveal">
+        <div class="stake-time">
+          <span class="num">2m</span>
+          <span class="unit">MINUTES</span>
+        </div>
+        <div class="stake-body">
+          <h3>Réinitialisation d'usine. <em>Tout</em> disparaît.</h3>
+          <p>Chaque localisation capturée, chaque capture, chaque audio enregistré — <strong>disparaît des deux côtés</strong>. Vous restez sans preuve et sans l'outil que vous venez d'acheter.</p>
+        </div>
+      </div>
+
+      <div class="stake-row reveal">
+        <div class="stake-time">
+          <span class="num">24h</span>
+          <span class="unit">HEURES</span>
+        </div>
+        <div class="stake-body">
+          <h3>Change de numéro. Supprime ses réseaux. Disparaît.</h3>
+          <p>Maintenant il/elle sait que vous soupçonniez — et <strong>ne va plus jamais glisser près de vous</strong>. Vous perdez même le point de départ de l'enquête. Probablement pour toujours.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="stakes-closer reveal">
+      Chaque minute sans invisibilité<br>est une minute où cette enquête peut s'arrêter.
+    </div>
+  </div>
+</section>
+
+<!-- LAYERS -->
+<section>
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="kicker">PROTOCOLE / 04 COUCHES</div>
+      <h2>Comment le Mode Invisible <em>vous sauve.</em></h2>
+    </div>
+
+    <div class="layers">
+
+      <article class="layer reveal">
+        <span class="layer-num">01</span>
+        <div class="layer-body">
+          <span class="tag">CAMOUFLAGE</span>
+          <h3>L'icône devient <em>calculatrice, horloge ou bloc-notes</em>.</h3>
+          <div class="moment">
+            <span class="label">LE MOMENT QUI VOUS SAUVE</span>
+            Il/elle a ouvert le gestionnaire d'applications, cherchant quelque chose d'étrange. A regardé chaque icône. <strong>N'a rien trouvé qu'il/elle ne connaissait pas.</strong> Vous restez à l'intérieur.
+          </div>
+        </div>
+      </article>
+
+      <article class="layer reveal">
+        <span class="layer-num">02</span>
+        <div class="layer-body">
+          <span class="tag">SILENCE</span>
+          <h3>Zéro notification. Zéro vibration. <em>Zéro trace.</em></h3>
+          <div class="moment">
+            <span class="label">LE MOMENT QUI VOUS SAUVE</span>
+            Vous avez capturé une capture de son WhatsApp. <strong>Il/elle avait le téléphone en main.</strong> N'a rien reçu. N'a rien vu. La capture est arrivée seulement chez vous.
+          </div>
+        </div>
+      </article>
+
+      <article class="layer reveal">
+        <span class="layer-num">03</span>
+        <div class="layer-body">
+          <span class="tag">PERSISTANCE</span>
+          <h3>Résiste à <em>toute mise à jour</em> iOS ou Android.</h3>
+          <div class="moment">
+            <span class="label">LE MOMENT QUI VOUS SAUVE</span>
+            iOS 19 est sorti. Il/elle a mis à jour. <strong>Le patch de camouflage a été appliqué le même jour.</strong> Les apps de surveillance amateurs se sont désactivées. La vôtre continue de tourner.
+          </div>
+        </div>
+      </article>
+
+      <article class="layer reveal">
+        <span class="layer-num">04</span>
+        <div class="layer-body">
+          <span class="tag">ALERTE</span>
+          <h3>Notification chez vous quand il/elle <em>commence à soupçonner</em>.</h3>
+          <div class="moment">
+            <span class="label">LE MOMENT QUI VOUS SAUVE</span>
+            Il/elle a ouvert les paramètres de sécurité. <strong>En 4 secondes vous recevez une notif : "Reculez maintenant. Pause 30 min."</strong> Enquête préservée.
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- INTERACTIVE DEMO -->
+<section class="demo-section">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="kicker">SIMULATEUR / EN DIRECT</div>
+      <h2>Touchez le <em>👁️</em> — voyez la transformation.</h2>
+    </div>
+
+    <div class="demo-card reveal">
+      <p class="demo-instruction">
+        Voici votre tableau de bord Deepen AI sur le téléphone. <strong>Le bouton Mode Invisible est dans le coin supérieur droit.</strong> Touchez pour activer.
+      </p>
+
+      <div class="phone-wrap">
+
+        <!-- THE PHONE -->
+        <div class="phone-frame" id="phoneFrame">
+          <div class="phone-notch"></div>
+          <div class="phone-screen" id="phoneScreen">
+
+            <!-- iOS status bar -->
+            <div class="ios-status">
+              <span class="time">14:34</span>
+              <span class="right-cluster"><span>5G</span><span>87%</span></span>
+            </div>
+
+            <!-- App header w/ toggle -->
+            <div class="app-header">
+              <div class="app-logo">Deepen AI<span class="dot">●</span></div>
+              <button class="toggle-eye" id="eyeToggle" onclick="toggleInvisible()" aria-label="Activer Mode Invisible">
+                <span class="toggle-pulse-hint"></span>
+                <span class="eye-icon">👁️</span>
+                <span class="label-off">OFF</span>
+                <span class="label-on">ACTIF</span>
+              </button>
+            </div>
+
+            <!-- Mode strip -->
+            <div class="mode-strip">
+              <span class="led"></span>
+              <span id="modeText">MODE STANDARD — VISIBLE</span>
+            </div>
+
+            <!-- Live feed -->
+            <div class="phone-feed">
+              <div class="feed-item">
+                <span class="t">14:34</span>
+                <span class="ig">📍</span>
+                <span class="tx"><strong>Hôtel Bristol</strong>, Champs-Élysées</span>
+                <span class="silent-flag">🔇</span>
+              </div>
+              <div class="feed-item">
+                <span class="t">14:31</span>
+                <span class="ig">📸</span>
+                <span class="tx">WhatsApp ouvert — capture</span>
+                <span class="silent-flag">🔇</span>
+              </div>
+              <div class="feed-item">
+                <span class="t">14:28</span>
+                <span class="ig">🎙️</span>
+                <span class="tx">Audio ambiant — 4min</span>
+                <span class="silent-flag">🔇</span>
+              </div>
+              <div class="feed-item">
+                <span class="t">14:18</span>
+                <span class="ig">💬</span>
+                <span class="tx">Nouveau msg : <strong>"Camille ❤️"</strong></span>
+                <span class="silent-flag">🔇</span>
+              </div>
+              <div class="feed-item">
+                <span class="t">14:15</span>
+                <span class="ig">📲</span>
+                <span class="tx">Bumble détecté (actif)</span>
+                <span class="silent-flag">🔇</span>
+              </div>
+            </div>
+
+            <!-- Bottom indicator -->
+            <div class="indicator-strip">
+              <span class="vis-label">SUR L'APPAREIL CIBLE :</span>
+              <span>
+                <span class="vis-text-off">● VISIBLE</span>
+                <span class="vis-text-on">● INDÉTECTABLE</span>
+              </span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Callout: what changes on target's phone -->
+        <div class="target-callout" id="targetCallout">
+          <div class="left">
+            <strong>↳ Sur son téléphone</strong><br>
+            l'icône de Deepen AI devient :
+          </div>
+          <div class="icon-display">
+            <div class="icon-box" id="iconBox">SM</div>
+            <div class="icon-text">
+              <span>
+                <span class="name-padrao">Deepen AI</span>
+                <span class="name-invisivel">Calculatrice</span>
+              </span>
+              <small id="iconLabel">VISIBLE</small>
+            </div>
+          </div>
+        </div>
+
+        <p class="demo-action-hint">
+          <span class="arrow">↑</span> C'est exactement ce 1 clic dans le produit réel.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section class="alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="kicker">SCÉNARIOS RÉELS</div>
+      <h2>Ce qui <em>arrive vraiment</em> dans chaque cas.</h2>
+    </div>
+
+    <div class="compare-grid">
+
+      <div class="compare-col reveal">
+        <div class="col-tag">// SANS MODE INVISIBLE</div>
+        <div class="col-name">Civil</div>
+
+        <div class="scenario">
+          <span class="when">Il/elle a fouillé le téléphone</span>
+          <span class="what">A trouvé Deepen AI dans la liste. <strong>Game over.</strong></span>
+        </div>
+        <div class="scenario">
+          <span class="when">iOS 19 a fait sa mise à jour</span>
+          <span class="what">L'app a arrêté jusqu'à réinstallation. <strong>Fenêtre exposée.</strong></span>
+        </div>
+        <div class="scenario">
+          <span class="when">Vous avez capturé un screenshot</span>
+          <span class="what">Un badge est apparu sur sa barre. <strong>A soupçonné.</strong></span>
+        </div>
+        <div class="scenario">
+          <span class="when">Il/elle a touché aux paramètres</span>
+          <span class="what">Vous ne saviez pas. <strong>Avez continué à surveiller pendant qu'il/elle fouillait.</strong></span>
+        </div>
+        <div class="scenario">
+          <span class="when">Enquête de plus de 30 jours</span>
+          <span class="what">Chaque jour : risque croissant. <strong>Tôt ou tard, repéré.</strong></span>
+        </div>
+      </div>
+
+      <div class="compare-col pro reveal">
+        <div class="col-tag">// AVEC MODE INVISIBLE</div>
+        <div class="col-name">Tactique</div>
+
+        <div class="scenario">
+          <span class="when">Il/elle a fouillé le téléphone</span>
+          <span class="what">A trouvé seulement une <strong>calculatrice</strong>. Vous restez dedans.</span>
+        </div>
+        <div class="scenario">
+          <span class="when">iOS 19 a fait sa mise à jour</span>
+          <span class="what"><strong>Patch automatique le même jour.</strong> Continue de tourner.</span>
+        </div>
+        <div class="scenario">
+          <span class="when">Vous avez capturé un screenshot</span>
+          <span class="what">Arrivé seulement chez vous. <strong>Zéro badge sur son téléphone.</strong></span>
+        </div>
+        <div class="scenario">
+          <span class="when">Il/elle a touché aux paramètres</span>
+          <span class="what"><strong>Notif en 4s sur votre téléphone :</strong> "pause 30min".</span>
+        </div>
+        <div class="scenario">
+          <span class="when">Enquête de plus de 30 jours</span>
+          <span class="what"><strong>Soutenable.</strong> Les pros opèrent des mois ainsi.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- AUTHORITY -->
+<section>
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="kicker">RESPONSABLE / TECHNIQUE</div>
+      <h2>Qui <em>l'a construit.</em></h2>
+    </div>
+
+    <div class="authority reveal">
+      <div class="authority-portrait">MT</div>
+      <div class="authority-body">
+        <div class="auth-tag">ING. DE SÉCURITÉ · 9 ANS</div>
+        <div class="auth-name">Marcus Tobias</div>
+        <div class="auth-role">// surveillance corporative · systèmes de camouflage</div>
+        <div class="auth-quote">
+          "Toute app de surveillance sérieuse doit présumer qu'elle sera traquée. Sans cette couche, c'est de l'amateur. Et l'amateur, se fait prendre."
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OFFER -->
+<section id="offer" class="alt">
+  <div class="container">
+    <div class="offer-box reveal">
+      <div class="offer-tag">DÉBLOCAGE UNIQUE</div>
+      <div class="offer-title">Mode Invisible —<br><em>accès à vie</em></div>
+
+      <div class="price-cluster">
+        <span class="price-old">97 $</span>
+        <span class="price-new">37 $</span>
+      </div>
+      <div class="price-context">PRIX CLIENT DEEPEN AI · UNIQUEMENT SUR CETTE PAGE</div>
+
+      <div class="why-discount">
+        <span class="label">POURQUOI 37 $ ET PAS 97 $</span>
+        Vous venez de montrer que vous allez utiliser Deepen AI sérieusement. Cette réduction est pour ceux qui entrent avec la stack complète — pas pour ceux qui arrivent sur notre site après. <strong>Quand cette page se fermera, le prix revient à 97 $ pour vous aussi.</strong>
+      </div>
+
+      <div class="offer-bullets">
+        <div class="offer-bullet"><span class="x">+</span><span><strong>À vie</strong> — payez une fois, utilisez pour toujours</span></div>
+        <div class="offer-bullet"><span class="x">+</span><span><strong>Garantie 30 jours</strong> — si vous êtes détecté(e), 100% remboursé sans question</span></div>
+        <div class="offer-bullet"><span class="x">+</span><span><strong>1 clic</strong> pour activer, 1 clic pour désactiver — sans rien réinstaller</span></div>
+        <div class="offer-bullet"><span class="x">+</span><span><strong>Patches à vie</strong> — chaque mise à jour OS de la cible, nouveau patch automatique</span></div>
+      </div>
+
+      <div class="timer-row" id="timerRow">
+        <span class="timer-label">LE PRIX REVIENT À 97 $ DANS</span>
+        <span class="timer-clock" id="timer">04:51</span>
+      </div>
+
+      <a href="#" class="cta" onclick="event.preventDefault();handleBuy()">
+        Oui, activer Mode Invisible — 37 $
+      </a>
+      <span class="cta-subtext">même carte · accès instantané</span>
+
+      <a class="decline-link" onclick="handleDecline()">
+        Non — je préfère risquer de perdre toute l'enquête pour économiser 37 $ →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PS -->
+<div class="ps-block">
+  <div class="container">
+    <div class="ps-frame reveal">
+      <p class="ps-text">
+        Vous avez ouvert cette page pour une raison.<br>
+        Vous savez qu'il/elle <em>est prudent(e).</em><br>
+        37 $ aujourd'hui. Ou une année à se demander "était-ce vrai ?".
+      </p>
+      <div class="ps-sig">— FIN DU DOSSIER //</div>
+    </div>
+  </div>
+</div>
+
+<!-- Sticky mobile CTA -->
+<div class="sticky-cta" id="stickyCta">
+  <a href="#offer" class="cta">Activer Mode Invisible — 37 $</a>
+</div>
+
+<script>
+  // INTERACTIVE TOGGLE
+  let isInvisible = false;
+
+  function toggleInvisible() {
+    const frame = document.getElementById('phoneFrame');
+    const screen = document.getElementById('phoneScreen');
+    const btn = document.getElementById('eyeToggle');
+    const modeText = document.getElementById('modeText');
+    const callout = document.getElementById('targetCallout');
+    const iconBox = document.getElementById('iconBox');
+    const iconLabel = document.getElementById('iconLabel');
+
+    // Scan-line wipe
+    frame.classList.add('scanning');
+    setTimeout(() => frame.classList.remove('scanning'), 900);
+
+    setTimeout(() => {
+      isInvisible = !isInvisible;
+      if (isInvisible) {
+        screen.classList.add('invisible');
+        btn.classList.add('active');
+        callout.classList.add('invisible');
+        iconBox.classList.add('invisible');
+        iconBox.textContent = '🧮';
+        iconLabel.textContent = 'CAMOUFLÉ';
+
+        // type-write modetext
+        const target = 'MODE INVISIBLE — ACTIF';
+        modeText.textContent = '';
+        let i = 0;
+        const ti = setInterval(() => {
+          modeText.textContent += target[i];
+          i++;
+          if (i >= target.length) clearInterval(ti);
+        }, 25);
+      } else {
+        screen.classList.remove('invisible');
+        btn.classList.remove('active');
+        callout.classList.remove('invisible');
+        iconBox.classList.remove('invisible');
+        iconBox.textContent = 'SM';
+        iconLabel.textContent = 'VISIBLE';
+        modeText.textContent = 'MODE STANDARD — VISIBLE';
+      }
+    }, 350);
+  }
+
+  // TIMER
+  let totalSeconds = 4 * 60 + 51;
+  const timerEl = document.getElementById('timer');
+  const timerRow = document.getElementById('timerRow');
+  function tick() {
+    if (totalSeconds <= 0) {
+      timerEl.textContent = '00:00';
+      timerRow.classList.add('expired');
+      return;
+    }
+    totalSeconds--;
+    const m = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+    const s = (totalSeconds % 60).toString().padStart(2, '0');
+    timerEl.textContent = `${m}:${s}`;
+  }
+  setInterval(tick, 1000);
+
+  // REVEAL
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // STICKY CTA
+  const stickyCta = document.getElementById('stickyCta');
+  const heroH = document.querySelector('.hero').offsetHeight;
+  let stickyShown = false;
+  window.addEventListener('scroll', () => {
+    const offerRect = document.getElementById('offer').getBoundingClientRect();
+    const offerInView = offerRect.top < window.innerHeight && offerRect.bottom > 0;
+    if (window.scrollY > heroH && !offerInView) {
+      if (!stickyShown) { stickyCta.classList.add('visible'); stickyShown = true; }
+    } else {
+      if (stickyShown) { stickyCta.classList.remove('visible'); stickyShown = false; }
+    }
+  }, { passive: true });
+
+  function handleBuy() {
+    alert("→ checkout du tunnel ici");
+  }
+  function handleDecline() {
+    if (confirm("Êtes-vous sûr ? Cette offre à 37 $ ne reviendra pas.")) {
+      alert("→ D2 / downsell ici");
+    }
+  }
+</script>
+</body>
+</html>
